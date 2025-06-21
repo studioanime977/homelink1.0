@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Mis Compras</title>
+  <script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const userSession = JSON.parse(localStorage.getItem("userSession"));
+  if (!userSession || !userSession.isLoggedIn) {
+    window.location.href = 'login.html?redirect=mis%20compras.html';
+  }
+  const res = await fetch('/api/miscompras', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ userSession })
+  });
+  const compras = await res.json();
+  const cont = document.getElementById('purchaseList');
+  if (!compras.length) {
+    cont.innerHTML = '<p>No tienes compras aún.</p>';
+  } else {
+    cont.innerHTML = compras.map(c => {
+      const items = JSON.parse(c.detalles)
+        .map(i => `<li>${i.name} x${i.quantity} – $${i.price}</li>`)
+        .join('');
+      return `
+        <div class="border p-4 mb-4">
+          <h3>Compra #${c.id_compra}</h3>
+          <p>Total: $${c.total}</p>
+          <p>Fecha: ${new Date(c.fecha).toLocaleString()}</p>
+          <ul>${items}</ul>
+        </div>`;
+    }).join('');
+  }
+});
+  </script>
+</head>
+<body>
+  <h1>Mis Compras</h1>
+  <div id="purchaseList"></div>
+</body>
+</html>

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cómo Funciona - HomeLink VPN</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="logo.ico">
+    <style>
+        :root {
+            --primary-color: #ee4d2d;
+            --secondary-color: #f53d2d;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #333333;
+        }
+
+        .video-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: linear-gradient(135deg, #fff5f5 0%, #fff0ed 100%);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 8px 15px rgba(238, 77, 45, 0.1);
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(238, 77, 45, 0.1);
+        }
+        .video-wrapper video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+            border-radius: 8px;
+        }
+    </style>
+
+<script>
+    fetch('https://ipinfo.io/json?token=your_token_here')
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('userIP').innerText = data.ip;
+        document.getElementById('userLocation').innerText = data.city + ", " + data.country;
+        document.getElementById('userStatus').innerText = "No protegido";  // Aquí se puede añadir la lógica de protección.
+    })
+    .catch(error => {
+        console.log('Error obteniendo la IP:', error);
+        document.getElementById('userIP').innerText = "No disponible";
+        document.getElementById('userLocation').innerText = "No disponible";
+        document.getElementById('userStatus').innerText = "No disponible";
+    });
+</script>
+</head>
+<body>
+    <div class='ip-info' style='text-align: center; padding: 20px; background-color: #f1f1f1;'>
+        <p>Tu IP actual: <span id='userIP'>Cargando...</span></p>
+        <p>Ubicación: <span id='userLocation'>Cargando...</span></p>
+        <p>Estado: <span id='userStatus'>No protegido</span></p>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-white shadow-md">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-8">
+                    <a href="index.html" class="text-2xl font-bold text-[#ee4d2d]">HomeLink VPN</a>
+                    <!-- Botón Volver -->
+                    <a href="servicio.html" class="flex items-center text-gray-600 hover:text-[#ee4d2d] transition-colors">
+                        <i class="fas fa-arrow-left mr-2"></i>
+                        Volver
+                    </a>
+                </div>
+                <!-- Navigation -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="servicio.html" class="text-gray-800 hover:text-[#ee4d2d]">Inicio</a>
+                    <a href="planes.html" class="text-gray-800 hover:text-[#ee4d2d]">Planes</a>
+                    <a href="mi carrito.html" class="text-gray-800 hover:text-[#ee4d2d]">Mi Carrito</a>
+                    <a href="mis compras.html" class="text-gray-800 hover:text-[#ee4d2d]">Mis Compras</a>
+                    <a href="monitoreo.html" class="text-gray-800 hover:text-[#ee4d2d]">Monitoreo</a>
+                </nav>
+                
+                <div class="flex items-center space-x-6">
+                    <!-- User Menu (visible cuando hay sesión) -->
+                    <div id="userProfile" class="hidden relative">
+                        <button id="profileButton" class="flex items-center space-x-3 hover:opacity-80">
+                            <div class="w-8 h-8 rounded-full bg-[#ee4d2d] flex items-center justify-center">
+                                <span class="text-white font-bold" id="userInitial"></span>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-gray-700" id="userName"></span>
+                                <i class="fas fa-chevron-down ml-2 text-xs text-gray-500"></i>
+                            </div>
+                        </button>
+
+                        <!-- Menú desplegable -->
+                        <div id="profileMenu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50">
+                            <div class="px-4 py-2 border-b">
+                                <p class="text-sm font-medium text-gray-900" id="userEmailDisplay"></p>
+                                <p class="text-xs text-gray-500">Plan Activo: Premium</p>
+                            </div>
+                            <a href="mi perfil.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                <i class="fas fa-user mr-2"></i>Mi Perfil
+                            </a>
+                            <a href="mi carrito.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                <i class="fas fa-shopping-cart mr-2"></i>Mi Carrito
+                            </a>
+                            <a href="configuracion.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                <i class="fas fa-cog mr-2"></i>Configuración
+                            </a>
+                            <button id="logoutButton" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">
+                                <i class="fas fa-sign-out-alt mr-2"></i>Cerrar Sesión
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Botones de Login/Registro (visibles cuando no hay sesión) -->
+                    <div id="authButtons">
+                        <a href="login.html?redirect=como_funciona.html" class="text-gray-700 hover:text-[#ee4d2d] mr-4">Iniciar Sesión</a>
+                        <a href="registro.html?redirect=como_funciona.html" class="bg-[#ee4d2d] text-white px-4 py-2 rounded-md hover:opacity-90">Registrarse</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <h1 class="text-4xl font-bold text-center mb-8">Cómo Funciona HomeLink VPN</h1>
+        
+        <!-- Video Section -->
+        <div class="video-container">
+            <div class="video-wrapper">
+                <video controls>
+                    <source src="https://seed132.bitchute.com/xo0o9WUuDe18/EoCCnBGllG6x.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+
+        <!-- Process Section -->
+        <section class="py-16">
+            <h2 class="text-3xl font-bold text-center mb-12">Proceso de Conexión Segura</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="feature-card">
+                    <div class="text-[#ee4d2d] text-4xl mb-4">
+                        <i class="fas fa-download"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">1. Instala HomeLink</h3>
+                    <p class="text-gray-600">Descarga nuestra aplicación desde tu tienda de aplicaciones preferida o desde nuestro sitio web oficial.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="text-[#ee4d2d] text-4xl mb-4">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">2. Configura tu Red</h3>
+                    <p class="text-gray-600">Sigue nuestro asistente paso a paso para configurar tu red doméstica de forma segura.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="text-[#ee4d2d] text-4xl mb-4">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">3. Conéctate desde Cualquier Lugar</h3>
+                    <p class="text-gray-600">¡Listo! Ahora puedes acceder a tu red doméstica desde cualquier parte del mundo.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Chatbot -->
+    <button id="chatButton" class="fixed bottom-4 right-4 bg-[#ee4d2d] text-white rounded-full p-4 shadow-lg hover:opacity-90 transition-opacity">
+        <i class="fas fa-comments text-xl"></i>
+    </button>
+
+    <div id="chatWindow" class="fixed bottom-20 right-4 w-80 bg-white rounded-lg shadow-xl hidden">
+        <div class="p-4 border-b border-gray-200 flex justify-between items-center bg-[#ee4d2d] text-white rounded-t-lg">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-robot"></i>
+                <span class="font-semibold">Asistente HomeLink</span>
+            </div>
+            <button id="closeChatButton" class="text-white hover:opacity-80">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div id="chatMessages" class="p-4 h-80 overflow-y-auto space-y-4">
+     ----------------------
+        </div>
+
+        <div class="p-4 border-t border-gray-200">
+            <div class="flex space-x-2">
+                <input id="userInput" type="text" placeholder="Escribe tu mensaje..." 
+                    class="flex-1 border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:border-[#ee4d2d]">
+                <button id="sendMessage" class="bg-[#ee4d2d] text-white rounded-full w-10 h-10 flex items-center justify-center hover:opacity-90">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+            <div class="mt-2 flex flex-wrap gap-2">
+                <button class="quick-option text-xs bg-gray-100 hover:bg-gray-200 rounded-full px-3 py-1">¿Qué es HomeLink?</button>
+                <button class="quick-option text-xs bg-gray-100 hover:bg-gray-200 rounded-full px-3 py-1">¿Es seguro?</button>
+                <button class="quick-option text-xs bg-gray-100 hover:bg-gray-200 rounded-full px-3 py-1">¿Cuánto cuesta?</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Manejo de la sesión de usuario
+        document.addEventListener('DOMContentLoaded', function() {
+            const userProfile = document.getElementById('userProfile');
+            const authButtons = document.getElementById('authButtons');
+            const profileButton = document.getElementById('profileButton');
+            const profileMenu = document.getElementById('profileMenu');
+            const logoutButton = document.getElementById('logoutButton');
+            const userInitial = document.getElementById('userInitial');
+            const userName = document.getElementById('userName');
+            const userEmailDisplay = document.getElementById('userEmailDisplay');
+
+            // Verificar si hay una sesión activa
+            const checkSession = () => {
+                const user = JSON.parse(localStorage.getItem('user'));
+                if (user) {
+                    userProfile.classList.remove('hidden');
+                    authButtons.classList.add('hidden');
+                    userInitial.textContent = user.name.charAt(0).toUpperCase();
+                    userName.textContent = user.name;
+                    userEmailDisplay.textContent = user.email;
+                } else {
+                    userProfile.classList.add('hidden');
+                    authButtons.classList.remove('hidden');
+                }
+            };
+
+            // Toggle del menú de perfil
+            profileButton?.addEventListener('click', () => {
+                profileMenu.classList.toggle('hidden');
+            });
+
+            // Cerrar sesión
+            logoutButton?.addEventListener('click', () => {
+                localStorage.removeItem('user');
+                checkSession();
+                profileMenu.classList.add('hidden');
+                // No redirigir, mantener al usuario en la página actual
+            });
+
+            // Cerrar el menú cuando se hace clic fuera
+            document.addEventListener('click', (e) => {
+                if (!profileButton?.contains(e.target) && !profileMenu?.contains(e.target)) {
+                    profileMenu?.classList.add('hidden');
+                }
+            });
+
+            // Verificar sesión al cargar
+            checkSession();
+
+            // Escuchar cambios en el localStorage para mantener sincronizada la sesión
+            window.addEventListener('storage', (e) => {
+                if (e.key === 'user') {
+                    checkSession();
+                }
+            });
+        });
+
+        // Funcionalidad del Chatbot (usando el mismo bot que en servicio.html)
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatButton = document.getElementById('chatButton');
+            const chatWindow = document.getElementById('chatWindow');
+            const closeChatButton = document.getElementById('closeChatButton');
+            const chatMessages = document.getElementById('chatMessages');
+            const userInput = document.getElementById('userInput');
+            const sendMessage = document.getElementById('sendMessage');
+            const quickOptions = document.querySelectorAll('.quick-option');
+
+            // Cargar el historial del chat desde localStorage
+            const loadChatHistory = () => {
+                const history = JSON.parse(localStorage.getItem('chatHistory') || '[]');
+                chatMessages.innerHTML = '';
+                history.forEach(msg => addMessage(msg.text, msg.isUser));
+            };
+
+            // Guardar mensaje en el historial
+            const saveChatMessage = (message, isUser) => {
+                const history = JSON.parse(localStorage.getItem('chatHistory') || '[]');
+                history.push({ text: message, isUser, timestamp: new Date().getTime() });
+                localStorage.setItem('chatHistory', JSON.stringify(history));
+            };
+
+            // Función para agregar mensajes al chat
+            function addMessage(message, isUser = false) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `flex ${isUser ? 'justify-end' : 'justify-start'}`;
+                
+                const messageContent = document.createElement('div');
+                messageContent.className = `${isUser ? 'bg-[#ee4d2d] text-white' : 'bg-gray-100 text-gray-800'} rounded-lg px-4 py-2 max-w-[80%]`;
+                messageContent.textContent = message;
+                
+                messageDiv.appendChild(messageContent);
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                
+                // Guardar en el historial
+                saveChatMessage(message, isUser);
+            }
+
+            // Función para procesar el mensaje del usuario
+            function processMessage(message) {
+                const normalizedMessage = message.toLowerCase();
+                let response = responses[normalizedMessage] || 
+                    'Lo siento, no entiendo tu pregunta. ¿Podrías reformularla o seleccionar una de las opciones rápidas?';
+                
+                addMessage(message, true);
+                setTimeout(() => addMessage(response), 500);
+            }
+
+            // Event Listeners
+            chatButton.addEventListener('click', () => {
+                chatWindow.classList.toggle('hidden');
+                if (!chatWindow.classList.contains('hidden')) {
+                    loadChatHistory();
+                    if (!localStorage.getItem('chatHistory')) {
+                        addMessage('¡Hola! ¿En qué puedo ayudarte hoy?');
+                    }
+                }
+            });
+
+            closeChatButton.addEventListener('click', () => {
+                chatWindow.classList.add('hidden');
+            });
+
+            sendMessage.addEventListener('click', () => {
+                const message = userInput.value.trim();
+                if (message) {
+                    processMessage(message);
+                    userInput.value = '';
+                }
+            });
+
+            userInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    const message = userInput.value.trim();
+                    if (message) {
+                        processMessage(message);
+                        userInput.value = '';
+                    }
+                }
+            });
+
+            quickOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    processMessage(option.textContent);
+                });
+            });
+
+            // Escuchar cambios en el historial del chat desde otras pestañas
+            window.addEventListener('storage', (e) => {
+                if (e.key === 'chatHistory' && !chatWindow.classList.contains('hidden')) {
+                    loadChatHistory();
+                }
+            });
+        });
+    </script>
+
+<div class="buttons">
+    <a href="router.html" class="btn btn-primary">Router</a>
+    <a href="como funciona.html" class="btn btn-primary">Cómo funciona</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Medios de Pago</title>
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const userSession = JSON.parse(localStorage.getItem("userSession"));
+  if (!userSession || !userSession.isLoggedIn) {
+    window.location.href = 'login.html?redirect=Medio%20de%20pago.html';
+  }
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  if (cart.length === 0) {
+    window.location.href = 'mi carrito.html';
+  }
+  const total = cart.reduce((sum, i) => sum + i.price * i.quantity, 0);
+  document.getElementById('pagarBtn').textContent = `Pagar $${total.toFixed(2)}`;
+  document.getElementById('totalLabel').innerText = `$${total.toFixed(2)}`;
+});
+  </script>
+</head>
+<body>
+  <h1>Medios de Pago</h1>
+  <form id="paymentForm">
+    <label>Persona:</label><input id="persona" required><br>
+    <label>Banco:</label><input id="banco" required><br>
+    <label>Nombres:</label><input id="nombres" required><br>
+    <label>Apellidos:</label><input id="apellidos" required><br>
+    <label>Correo:</label><input id="correo" type="email" required><br>
+    <label>Tipo ID:</label><input id="tipo-id" required><br>
+    <label>Documento:</label><input id="documento" required><br>
+    <label>Celular:</label><input id="celular" required><br>
+    <button id="pagarBtn" type="submit">Pagar</button><br>
+  </form>
+  <p>Total: <span id="totalLabel"></span></p>
+  <script>
+document.getElementById('paymentForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const userSession = JSON.parse(localStorage.getItem("userSession"));
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  const paymentInfo = {
+    persona: document.getElementById('persona').value,
+    banco: document.getElementById('banco').value,
+    nombres: document.getElementById('nombres').value,
+    apellidos: document.getElementById('apellidos').value,
+    correo: document.getElementById('correo').value,
+    tipoId: document.getElementById('tipo-id').value,
+    documento: document.getElementById('documento').value,
+    celular: document.getElementById('celular').value
+  };
+  const res = await fetch('/api/comprar', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ userSession, cart, paymentInfo })
+  });
+  const data = await res.json();
+  if (data.id) {
+    localStorage.removeItem('cart');
+    alert('¡Compra exitosa! 🎉🛒');
+    window.location.href = 'mis compras.html';
+  } else {
+    alert('Error al procesar tu compra');
+  }
+});
+  </script>
+</body>
+</html>

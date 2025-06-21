@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil - HOMELINK</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            color: #666;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            padding: 0.5rem;
+            border-radius: 2px;
+            transition: color 0.2s;
+        }
+
+        .back-button:hover {
+            color: #ee4d2d;
+        }
+
+        .back-button i {
+            font-size: 1.25rem;
+        }
+
+        .profile-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 2px;
+            box-shadow: 0 1px 2px 0 rgba(0,0,0,.13);
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1rem;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #ee4d2d;
+        }
+
+        .profile-avatar:hover::after {
+            content: 'Cambiar foto';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            font-size: 0.75rem;
+            padding: 0.25rem;
+            border-bottom-left-radius: 50%;
+            border-bottom-right-radius: 50%;
+        }
+
+        .profile-name {
+            font-size: 1.5rem;
+            color: #222;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-email {
+            color: #666;
+            font-size: 0.875rem;
+        }
+
+        .profile-form {
+            margin-top: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: #222;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #dbdbdb;
+            border-radius: 2px;
+            font-size: 0.875rem;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #ee4d2d;
+        }
+
+        .save-button {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #ee4d2d;
+            color: white;
+            border: none;
+            border-radius: 2px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .save-button:hover {
+            opacity: 0.9;
+        }
+
+        #avatarInput {
+            display: none;
+        }
+    </style>
+
+<script>
+    fetch('https://ipinfo.io/json?token=your_token_here')
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('userIP').innerText = data.ip;
+        document.getElementById('userLocation').innerText = data.city + ", " + data.country;
+        document.getElementById('userStatus').innerText = "No protegido";  // Aquí se puede añadir la lógica de protección.
+    })
+    .catch(error => {
+        console.log('Error obteniendo la IP:', error);
+        document.getElementById('userIP').innerText = "No disponible";
+        document.getElementById('userLocation').innerText = "No disponible";
+        document.getElementById('userStatus').innerText = "No disponible";
+    });
+</script>
+</head>
+<body>
+    <div class='ip-info' style='text-align: center; padding: 20px; background-color: #f1f1f1;'>
+        <p>Tu IP actual: <span id='userIP'>Cargando...</span></p>
+        <p>Ubicación: <span id='userLocation'>Cargando...</span></p>
+        <p>Estado: <span id='userStatus'>No protegido</span></p>
+    </div>
+
+    <a href="HOMELINK.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Volver al inicio
+    </a>
+
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="profile-avatar">
+                <img src="default-avatar.png" alt="Avatar" id="avatarPreview">
+                <input type="file" id="avatarInput" accept="image/*">
+            </div>
+            <h1 class="profile-name" id="profileName">Nombre de Usuario</h1>
+            <p class="profile-email" id="profileEmail">usuario@email.com</p>
+        </div>
+
+        <form class="profile-form" id="profileForm">
+            <div class="form-group">
+                <label for="inputNombre">Nombre completo</label>
+                <input type="text" id="inputNombre" name="nombre" required>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail">Correo electrónico</label>
+                <input type="email" id="inputEmail" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="inputPassword">Nueva contraseña (opcional)</label>
+                <input type="password" id="inputPassword" name="password">
+            </div>
+
+            <button type="submit" class="save-button">Guardar cambios</button>
+        </form>
+    </div>
+
+    <script>
+        // Función para cargar los datos del perfil
+        function cargarPerfil() {
+            const usuarioData = localStorage.getItem('usuario');
+            if (usuarioData) {
+                try {
+                    const usuario = JSON.parse(usuarioData);
+                    
+                    // Actualizar avatar
+                    const avatarImg = document.getElementById('avatarPreview');
+                    if (avatarImg) {
+                        if (usuario.avatar && usuario.avatar !== 'default-avatar.png') {
+                            avatarImg.src = usuario.avatar;
+                        } else {
+                            avatarImg.src = 'default-avatar.png';
+                        }
+                        
+                        // Manejar errores de carga de imagen
+                        avatarImg.onerror = function() {
+                            this.src = 'default-avatar.png';
+                        };
+                    }
+                    
+                    // Actualizar información del perfil
+                    document.getElementById('profileName').textContent = usuario.nombre || 'Usuario';
+                    document.getElementById('profileEmail').textContent = usuario.email || '';
+                    document.getElementById('inputNombre').value = usuario.nombre || '';
+                    document.getElementById('inputEmail').value = usuario.email || '';
+                } catch (error) {
+                    console.error('Error al cargar datos del perfil:', error);
+                    window.location.href = 'login.html';
+                }
+            } else {
+                // Redirigir a login si no hay usuario
+                window.location.href = 'login.html';
+            }
+        }
+
+        // Permitir hacer clic en la imagen para seleccionar archivo
+        document.querySelector('.profile-avatar').addEventListener('click', function() {
+            document.getElementById('avatarInput').click();
+        });
+
+        // Manejar la subida de nueva imagen de perfil
+        document.getElementById('avatarInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const imageData = e.target.result;
+                    
+                    // Actualizar la vista previa
+                    document.getElementById('avatarPreview').src = imageData;
+                    
+                    // Actualizar en localStorage
+                    const usuario = JSON.parse(localStorage.getItem('usuario'));
+                    usuario.avatar = imageData;
+                    localStorage.setItem('usuario', JSON.stringify(usuario));
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Manejar envío del formulario
+        document.getElementById('profileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            try {
+                // Obtener datos actuales
+                const usuario = JSON.parse(localStorage.getItem('usuario'));
+                
+                // Actualizar datos
+                usuario.nombre = document.getElementById('inputNombre').value;
+                usuario.email = document.getElementById('inputEmail').value;
+                
+                const newPassword = document.getElementById('inputPassword').value;
+                if (newPassword) {
+                    usuario.password = newPassword;
+                }
+                
+                // Guardar cambios
+                localStorage.setItem('usuario', JSON.stringify(usuario));
+                
+                // Actualizar interfaz
+                document.getElementById('profileName').textContent = usuario.nombre;
+                document.getElementById('profileEmail').textContent = usuario.email;
+                
+                // Mostrar mensaje y redirigir
+                alert('Cambios guardados correctamente');
+                window.location.href = 'HOMELINK.html';
+            } catch (error) {
+                console.error('Error al guardar cambios:', error);
+                alert('Error al guardar los cambios. Por favor, intenta de nuevo.');
+            }
+        });
+
+        // Cargar perfil cuando se carga la página
+        document.addEventListener('DOMContentLoaded', cargarPerfil);
+    </script>
+
+<div class="buttons">
+    <a href="router.html" class="btn btn-primary">Router</a>
+    <a href="como funciona.html" class="btn btn-primary">Cómo funciona</a>
+</div>
+</body>
+</html>

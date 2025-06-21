@@ -1,0 +1,13 @@
+{
+  "name": "mi-herramienta",
+  "version": "1.0.0",
+  "description": "Una herramienta CLI de ejemplo",
+  "main": "index.js",
+  "bin": {
+    "mi-comando": "./index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {}
+}

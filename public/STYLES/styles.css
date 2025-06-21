@@ -1,0 +1,9 @@
+
+.alert {
+    background-color: #f44336; /* Rojo */
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-size: 18px;
+    margin-top: 20px;
+}

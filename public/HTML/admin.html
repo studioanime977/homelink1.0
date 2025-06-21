@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin SQL</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin:20px; }
+    label { display:block; margin-top:10px; }
+    input, select, textarea { width:100%; padding:8px; box-sizing:border-box; }
+    button { margin-top:15px; padding:10px 20px; }
+  </style>
+</head>
+<body>
+  <h1>Crear Nueva Tabla</h1>
+  <form id="createTableForm">
+    <label>Nombre de la tabla:</label>
+    <input type="text" id="tableName" required>
+
+    <label>Columnas (JSON array):</label>
+    <textarea id="columns" rows="4" placeholder='[ { "name":"id", "type":"INT", "primary":true, "autoIncrement":true }, ... ]' required></textarea>
+
+    <label>Claves Foráneas (JSON array opcional):</label>
+    <textarea id="foreignKeys" rows="3" placeholder='[ { "column":"user_id", "refTable":"usuarios", "refColumn":"id_usuario", "onDelete":"CASCADE", "onUpdate":"CASCADE" } ]'></textarea>
+
+    <button type="submit">Crear Tabla</button>
+  </form>
+
+  <div id="result" style="margin-top:20px;color:green;"></div>
+
+  <script>
+  document.getElementById('createTableForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const tableName = document.getElementById('tableName').value.trim();
+    const columns = JSON.parse(document.getElementById('columns').value);
+    const foreignKeys = document.getElementById('foreignKeys').value
+      ? JSON.parse(document.getElementById('foreignKeys').value)
+      : [];
+
+    const res = await fetch('/api/admin/create-table', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ tableName, columns, foreignKeys })
+    });
+
+    const text = await res.text();
+    document.getElementById('result').textContent = text;
+  });
+  </script>
