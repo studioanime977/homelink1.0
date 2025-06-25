@@ -1,11 +1,14 @@
 require('dotenv').config();
-const express  = require('express');
-const session  = require('express-session');
-const path     = require('path');
-const bcrypt   = require('bcryptjs');
-const pool     = require('./config/db');        // config/db.js → crea el pool
-const app      = express();
+import express from 'express';
+import path from 'path';
+
+const app = express();
+
+/* ──────────────── Configuración ──────────────── */
 const PORT     = process.env.PORT || 3000;
+
+// Si usas ES Modules, define __dirname así:
+const __dirname = path.resolve();
 
 /* ──────────────── Middleware ──────────────── */
 app.use(express.static(path.join(__dirname, 'public')));
