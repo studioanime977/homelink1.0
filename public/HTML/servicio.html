@@ -219,12 +219,6 @@
 </script>
 </head>
 <body>
-    <div class='ip-info' style='text-align: center; padding: 20px; background-color: #f1f1f1;'>
-        <p>Tu IP actual: <span id='userIP'>Cargando...</span></p>
-        <p>Ubicación: <span id='userLocation'>Cargando...</span></p>
-        <p>Estado: <span id='userStatus'>No protegido</span></p>
-    </div>
-
     <!-- Header -->
     <header class="bg-white shadow-md">
         <div class="container mx-auto px-4">
@@ -236,8 +230,9 @@
                 <nav class="hidden md:flex space-x-8">
                     <a href="servicio.html" class="text-gray-800 hover:text-[#ee4d2d]">Inicio</a>
                     <a href="como funciona.html" class="text-gray-800 hover:text-[#ee4d2d]">Cómo Funciona</a>
-                    <a href="planes.html" class="text-gray-800 hover:text-[#ee4d2d]">Planes</a>
-                    <a href="mi carrito.html" class="text-gray-800 hover:text-[#ee4d2d]">Mi Carrito</a>
+                    <a href="router.html" class="text-gray-800 hover:text-[#ee4d2d]">Planes</a>
+                     <li class="solo‑logueado"><a href="carrito.html">Carrito</a></li>
+                     <li class="solo‑logueado"><a href="perfil.html">Perfil</a></li>
                     <a href="mis compras.html" class="text-gray-800 hover:text-[#ee4d2d]">Mis Compras</a>
                     <a href="monitoreo.html" class="text-gray-800 hover:text-[#ee4d2d]">Monitoreo</a>
                 </nav>
@@ -558,6 +553,21 @@
             checkSession();
         });
     </script>
+
+<script>
+  // Esconde de entrada
+  document.querySelectorAll('.solo‑logueado').forEach(el => el.style.display='none');
+
+  // Pregunta al backend si hay sesión
+  fetch('/api/sesion')
+    .then(r => r.json())
+    .then(({ logueado }) => {
+      if (logueado) {
+        document.querySelectorAll('.solo‑logueado')
+          .forEach(el => el.style.display='block');
+      }
+    });
+</script>
 
 <div class="buttons">
     <a href="router.html" class="btn btn-primary">Router</a>
