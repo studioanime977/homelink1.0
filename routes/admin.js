@@ -3,7 +3,7 @@ const router = express.Router();
 const pool = require('../config/db');
 
 // POST /api/admin/create-table
-router.post('/admin/create-table', (req, res) => {
+router.post('/create-table', (req, res) => {
   const { tableName, columns, foreignKeys } = req.body;
   if (!tableName || !Array.isArray(columns))
     return res.status(400).send('Tabla o columnas inválidas');
