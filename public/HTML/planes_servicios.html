@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planes y Servicios - HomeLink VPN</title>
+    <link rel="stylesheet" href="/STYLES/styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-white shadow-md py-4 w-full">
+        <div class="container mx-auto flex items-center justify-between px-4">
+            <a href="servicio.html" class="text-2xl font-bold text-[#ee4d2d] flex items-center">
+                <i class="fas fa-list-alt mr-2"></i> Planes y Servicios
+            </a>
+            <nav class="space-x-6 flex items-center" id="mainMenu">
+                <a href="servicio.html" class="text-gray-700 hover:text-[#ee4d2d]">Inicio</a>
+                <a href="router.html" class="text-gray-700 hover:text-[#ee4d2d]">Planes</a>
+                <a href="monitoreo.html" class="text-gray-700 hover:text-[#ee4d2d] hidden" id="monitoreoMenu">Monitoreo</a>
+                <a href="mi carrito.html" class="text-gray-700 hover:text-[#ee4d2d] hidden" id="carritoMenu">Mi Carrito</a>
+                <a href="mis compras.html" class="text-gray-700 hover:text-[#ee4d2d] hidden" id="comprasMenu">Mis Compras</a>
+                <a href="login.html" class="text-gray-700 hover:text-[#ee4d2d]" id="loginBtn">Iniciar Sesión</a>
+                <a href="#" class="text-gray-700 hover:text-[#ee4d2d] hidden" id="logoutBtn">Salir</a>
+            </nav>
+        </div>
+    </header>
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col items-center justify-center">
+        <div class="bg-white rounded-xl shadow-lg p-8 max-w-md w-full text-center">
+            <h1 class="text-3xl font-bold text-[#ee4d2d] mb-4">Planes y Servicios</h1>
+            <p class="text-gray-700 mb-4">En HomeLink ofrecemos diferentes planes para adaptarnos a tus necesidades:</p>
+            <ul class="list-disc list-inside text-left text-gray-700 mb-4">
+                <li><strong>Plan Básico:</strong> Acceso a productos esenciales y soporte estándar.</li>
+                <li><strong>Plan Premium:</strong> Productos avanzados, soporte prioritario y beneficios exclusivos.</li>
+                <li><strong>Servicios Adicionales:</strong> Instalación, configuración y asesoría personalizada.</li>
+            </ul>
+        </div>
+    </main>
+    <!-- Footer y scripts -->
+    <footer class="bg-white shadow-inner pt-12 pb-4 mt-8 w-full border-t">
+        <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-5 gap-8 mb-6">
+            <div>
+                <h3 class="uppercase text-xs font-bold mb-2 text-gray-700">Servicio al Cliente</h3>
+                <ul class="space-y-1 text-sm text-gray-600">
+                    <li><a href="peticiones.html" class="hover:text-[#ee4d2d]">Peticiones, Quejas y Reclamos</a></li>
+                    <li><a href="metodos_pago.html" class="hover:text-[#ee4d2d]">Métodos de Pago</a></li>
+                    <li><a href="devolucion_reembolso.html" class="hover:text-[#ee4d2d]">Devolución y Reembolso</a></li>
+                    <li><a href="garantia.html" class="hover:text-[#ee4d2d]">Garantía HomeLink</a></li>
+                    <li><a href="contactanos.html" class="hover:text-[#ee4d2d]">Contáctanos</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="uppercase text-xs font-bold mb-2 text-gray-700">Acerca de HomeLink</h3>
+                <ul class="space-y-1 text-sm text-gray-600">
+                    <li><a href="sobre_nosotros.html" class="hover:text-[#ee4d2d]">Sobre Nosotros</a></li>
+                    <li><a href="planes_servicios.html" class="hover:text-[#ee4d2d]">Planes y Servicios</a></li>
+                    <li><a href="politica_privacidad.html" class="hover:text-[#ee4d2d]">Política de Privacidad</a></li>
+                    <li><a href="terminos_servicio.html" class="hover:text-[#ee4d2d]">Términos de Servicio</a></li>
+                    <li><a href="soporte_tecnico.html" class="hover:text-[#ee4d2d]">Soporte Técnico</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="uppercase text-xs font-bold mb-2 text-gray-700">Pago</h3>
+                <div class="flex flex-wrap gap-2 items-center mt-2">
+                    <img src="../imagenes/mastercard.png" alt="Mastercard" class="h-5">
+                    <img src="../imagenes/visa.png" alt="Visa" class="h-5">
+                    <img src="../imagenes/diners.png" alt="Diners" class="h-5">
+                    <img src="../imagenes/pse.png" alt="PSE" class="h-5">
+                    <img src="../imagenes/efecty.png" alt="Efecty" class="h-5">
+                </div>
+            </div>
+            <div>
+                <h3 class="uppercase text-xs font-bold mb-2 text-gray-700">Síguenos</h3>
+                <ul class="space-y-1 text-sm text-gray-600">
+                    <li><a href="#" class="hover:text-[#ee4d2d]">Facebook</a></li>
+                    <li><a href="#" class="hover:text-[#ee4d2d]">Instagram</a></li>
+                    <li><a href="#" class="hover:text-[#ee4d2d]">LinkedIn</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="uppercase text-xs font-bold mb-2 text-gray-700">Descargar la App HomeLink</h3>
+                <div class="flex items-center gap-2 mb-2">
+                    <img src="../imagenes/qr.jpg" alt="QR HomeLink" class="w-16 h-16 rounded">
+                    <div class="flex flex-col gap-1">
+                        <img src="../imagenes/google-play-badge.png" alt="Google Play" class="h-6">
+                        <img src="../imagenes/app-store-badge.png" alt="App Store" class="h-6">
+                        <img src="../imagenes/appgallery-badge.png" alt="AppGallery" class="h-6">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center text-xs text-gray-500 border-t pt-4">
+            &copy; 2025 HomeLink. Todos los Derechos Reservados
+        </div>
+    </footer>
+</body>
+</html> 

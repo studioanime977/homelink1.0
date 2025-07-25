@@ -1,0 +1,25 @@
+<!-- filepath: views/parts/header.ejs -->
+<header class="p-4 bg-gray-800 text-white flex justify-between">
+  <a href="/">HomeLink</a>
+  <% if (usuario) { %>
+    <div class="flex items-center gap-2">
+      <img src="<%= usuario.foto %>" class="w-8 h-8 rounded-full object-cover">
+      <span><%= usuario.nombre %></span>
+    </div>
+  <% } else { %>
+    <a href="/HTML/login.html">Iniciar sesión</a>
+  <% } %>
+</header>
+
+<%
+// filepath: config/database.js
+const mysql = require('mysql2/promise');
+module.exports = mysql.createPool({
+  host     : process.env.DB_HOST || 'localhost',
+  user     : process.env.DB_USER || 'root',
+  password : process.env.DB_PASS || '',
+  database : process.env.DB_NAME || 'homelink',
+  waitForConnections: true,
+  connectionLimit   : 10
+});
+%>

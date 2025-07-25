@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Mi perfil</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+  <%- include('parts/header') %>
+
+  <main class="container mx-auto max-w-3xl py-10">
+    <h1 class="text-3xl font-bold mb-6">Mi perfil</h1>
+
+    <div class="bg-white p-6 rounded shadow flex gap-6">
+      <% if (user.foto) { %>
+        <img src="<%= user.foto %>" alt="Foto" class="w-32 h-32 object-cover rounded-full">
+      <% } else { %>
+        <div class="w-32 h-32 rounded-full bg-[#ee4d2d] flex items-center justify-center text-white text-4xl font-bold">
+          <%= user.nombre.charAt(0) %>
+        </div>
+      <% } %>
+
+      <div>
+        <p class="text-xl font-semibold"><%= user.nombre %></p>
+        <p class="text-gray-600"><%= user.correo %></p>
+        <p class="mt-4 text-sm text-gray-500">Aquí podrás agregar más datos de perfil, cambiar contraseña, etc.</p>
+      </div>
+    </div>
+  </main>
+
+  <%- include('parts/footer') %>
+</body>
+</html>

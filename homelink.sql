@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-06-2025 a las 00:22:18
+-- Tiempo de generación: 05-07-2025 a las 16:15:09
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -31,7 +31,8 @@ CREATE TABLE `compras` (
   `id_compra` int(11) NOT NULL,
   `id_usuario` varchar(40) NOT NULL,
   `total` decimal(10,2) NOT NULL,
-  `fecha` datetime NOT NULL DEFAULT current_timestamp()
+  `fecha` datetime NOT NULL DEFAULT current_timestamp(),
+  `detalles` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -140,6 +141,16 @@ CREATE TABLE `productos` (
   `stock` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `productos`
+--
+
+INSERT INTO `productos` (`id_producto`, `nombre`, `descripcion`, `precio`, `stock`) VALUES
+(1, 'ASUS RT-AC86U', 'Wi-Fi Doble Banda AC2900, 4 puertos Gigabit LAN, USB 3.1 y USB 2.0, Soporte OpenVPN nativo, CPU Dual-Core 1.8GHz', 199.99, 10),
+(2, 'TP-Link Archer C2300', 'Wi-Fi Dual Band AC2300, 4 puertos LAN Gigabit, USB 3.0 y USB 2.0, Soporte OpenVPN y PPTP, MU-MIMO + Beamforming', 179.99, 15),
+(3, 'Cudy WR3000E', 'Wi-Fi Dual Band AC2300, 5 puertos LAN Gigabit, USB 3.0 y USB 2.0, WireGuard, OpenVPN, IPsec, Zerotier, PPTP y L2TP, MU-MIMO + Beamforming', 179.99, 20),
+(4, 'Netgear X4S D7800', 'Wi-Fi AC2600 (hasta 2.53 Gbps), 4 puertos Gigabit LAN, USB 3.0, Compatible con OpenVPN, Procesador Dual-Core 1.4GHz', 249.99, 5);
+
 -- --------------------------------------------------------
 
 --
@@ -163,8 +174,16 @@ CREATE TABLE `usuarios` (
   `id_usuario` varchar(40) NOT NULL,
   `nombre` varchar(100) NOT NULL,
   `correo` varchar(100) NOT NULL,
-  `contrasena` varchar(255) NOT NULL
+  `contrasena` varchar(255) NOT NULL,
+  `foto` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`id_usuario`, `nombre`, `correo`, `contrasena`, `foto`) VALUES
+('0292f49f-591e-11f0-86ca-0a0027000010', 'ESTEBAN MANUEL LOPEZ RIVERO', 'studiootaku6@gmail.com', '$2b$10$5g1TEZYsVfvUzzNszL0tD.XR8UavPqYEDxxg/jlhDNQJmrIhr..Ia', NULL);
 
 -- --------------------------------------------------------
 
@@ -291,7 +310,7 @@ ALTER TABLE `pagos`
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restricciones para tablas volcadas

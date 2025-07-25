@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HomeLink VPN - Protege tu Conexión</title>
+    <link rel="stylesheet" href="/STYLES/styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        :root {
+            --primary-color: #ee4d2d;
+            --secondary-color: #f53d2d;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ee4d2d 0%, #f53d2d 100%);
+            margin: 0;
+            min-height: 100vh;
+            color: #333333;
+            padding-top: 0; 
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #ee4d2d 0%, #f53d2d 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding-top: 80px;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #f0f0f0;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(238, 77, 45, 0.1);
+        }
+
+        .map-section {
+            background: #f8f9fa;
+            position: relative;
+            overflow: hidden;
+            padding: 4rem 0;
+        }
+
+        .map-container {
+            position: relative;
+            height: 500px;
+            background: url('https://nordvpn.com/wp-content/uploads/2019/09/global-map-nordvpn-servers.svg') center/contain no-repeat;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(255, 60, 60, 0.1);
+        }
+
+        .security-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .security-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #f0f0f0;
+        }
+
+        .security-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+
+        .guarantee-section {
+            background: linear-gradient(135deg, #fff5f5 0%, #fff0ed 100%);
+            position: relative;
+            overflow: hidden;
+            padding: 4rem 0;
+        }
+
+        .guarantee-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg"><rect width="20" height="20" fill="none"/><circle cx="3" cy="3" r="0.5" fill="%23ee4d2d" opacity="0.2"/></svg>') repeat;
+        }
+
+        .floating-numbers {
+            position: absolute;
+            font-size: 12rem;
+            font-weight: bold;
+            opacity: 0.1;
+            color: var(--primary-color);
+            z-index: 0;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(238, 77, 45, 0.3);
+        }
+
+        .ip-display {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .header {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .price-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #f0f0f0;
+        }
+
+        .price-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+        }
+
+        .faq-section {
+            background: #f8f9fa;
+            padding: 4rem 0;
+        }
+
+        .stats-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .header-top {
+            background-color: var(--primary-color);
+            padding: 0.5rem 0;
+        }
+
+        .header-top-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.25rem;
+            display: flex;
+            justify-content: flex-end;
+            gap: 1.5rem;
+        }
+
+        .header-top-link {
+            color: #fff;
+            font-size: 0.75rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .header-top-link:hover {
+            opacity: 0.8;
+        }
+
+        .header-main {
+            padding: 1rem 0;
+            background-color: #fff;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .ip-block {
+            background: linear-gradient(135deg, #ee4d2d 0%, #f53d2d 100%);
+            color: #fff;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 16px rgba(238,77,45,0.08);
+            display: inline-block;
+            min-width: 320px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+
+<script>
+    fetch('https://ipinfo.io/json?token=your_token_here')
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('userIP').innerText = data.ip;
+        document.getElementById('userLocation').innerText = data.city + ", " + data.country;
+        document.getElementById('userStatus').innerText = "No protegido";  // Aquí se puede añadir la lógica de protección.
+    })
+    .catch(error => {
+        console.log('Error obteniendo la IP:', error);
+        document.getElementById('userIP').innerText = "No disponible";
+        document.getElementById('userLocation').innerText = "No disponible";
+        document.getElementById('userStatus').innerText = "No disponible";
+    });
+</script>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+    <!-- Encabezado HomeLink -->
+    <header class="bg-white shadow-md py-4 w-full">
+        <div class="container mx-auto flex items-center justify-between px-4">
+            <a href="servicio.html" class="text-2xl font-bold text-[#ee4d2d] flex items-center">
+                <i class="fas fa-wifi mr-2"></i> HomeLink
+            </a>
+            <nav class="space-x-6 flex items-center" id="mainMenu">
+                <a href="servicio.html" class="text-gray-700 hover:text-[#ee4d2d]">Inicio</a>
+                <a href="router.html" class="text-gray-700 hover:text-[#ee4d2d]">Planes</a>
+                <a href="monitoreo.html" class="text-gray-700 hover:text-[#ee4d2d] hidden" id="monitoreoMenu">Monitoreo</a>
+                <a href="mi carrito.html" class="text-gray-700 hover:text-[#ee4d2d] hidden" id="carritoMenu">Mi Carrito</a>
+                <a href="mis compras.html" class="text-gray-700 hover:text-[#ee4d2d] hidden" id="comprasMenu">Mis Compras</a>
+                <a href="login.html" class="bg-[#ee4d2d] text-white px-4 py-2 rounded-md font-bold hover:bg-[#d13f1d] transition-colors" id="loginBtn">Iniciar Sesión</a>
+                <a href="#" class="text-gray-700 hover:text-[#ee4d2d] hidden" id="logoutBtn">Salir</a>
+            </nav>
+        </div>
+    </header>
+    <!-- Hero Section con IP y Mapa -->
+    <section class="hero-section">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-5xl font-bold mb-6">Internet Sin Límites con HomeLink VPN Router</h1>
+            <p class="text-xl mb-8">Conecta tu hogar a internet de forma segura sin depender de datos móviles</p>
+            <!-- Bloque de IP (solo aquí) -->
+            <div class="bg-[#ee4d2d] bg-opacity-90 rounded-xl shadow-lg p-6 text-white text-center max-w-md mx-auto mb-8">
+                <h2 class="text-2xl font-semibold mb-2">Tu IP actual: <span id="ipPublica">Cargando...</span></h2>
+                <p class="mb-1">Ubicación: <span id="ubicacion">Cargando...</span></p>
+                <p>Estado: <span id="estado" class="text-white">No protegido</span></p>
+            </div>
+        </div>
+
+        <!-- World Map Background with Server Locations -->
+        <div class="absolute inset-0 opacity-20 z-0">
+            <div class="map-container h-full"></div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="flex-1">
+        <!-- Features Section -->
+        <section id="features" class="py-20 bg-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold text-center mb-16">
+                    <span class="gradient-text">¿Por qué elegir HomeLink VPN Router?</span>
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Feature 1 -->
+                    <div class="feature-card">
+                        <i class="fas fa-wifi text-4xl text-[#ee4d2d] mb-4"></i>
+                        <h3 class="text-xl font-bold mb-3">Sin Datos Móviles</h3>
+                        <p class="text-gray-600">Navega por internet sin consumir tus datos móviles, usando tu router HomeLink VPN.</p>
+                    </div>
+                    <!-- Feature 2 -->
+                    <div class="feature-card">
+                        <i class="fas fa-home text-4xl text-[#ee4d2d] mb-4"></i>
+                        <h3 class="text-xl font-bold mb-3">Conexión Doméstica</h3>
+                        <p class="text-gray-600">Router VPN preconfigurado para toda tu casa, fácil de instalar y usar.</p>
+                    </div>
+                    <!-- Feature 3 -->
+                    <div class="feature-card">
+                        <i class="fas fa-shield-alt text-4xl text-[#ee4d2d] mb-4"></i>
+                        <h3 class="text-xl font-bold mb-3">Máxima Seguridad</h3>
+                        <p class="text-gray-600">Protección VPN integrada en tu router para todos tus dispositivos.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section class="py-16 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-12">Cómo Funciona</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <!-- Paso 1 -->
+                    <div class="text-center">
+                        <div class="bg-white rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                            <i class="fas fa-box text-[#ee4d2d] text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-lg mb-2">1. Recibe tu Router</h3>
+                        <p class="text-gray-600">Router VPN preconfigurado e instalá la app HomeLink desde la tienda de aplicaciones</p>
+                    </div>
+
+                    <!-- Paso 2 -->
+                    <div class="text-center">
+                        <div class="bg-white rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                            <i class="fas fa-power-off text-[#ee4d2d] text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-lg mb-2">2. Enciende el Router</h3>
+                        <p class="text-gray-600">Simplemente conecta el router a la corriente y espera a que se encienda</p>
+                    </div>
+
+                    <!-- Paso 3 -->
+                    <div class="text-center">
+                        <div class="bg-white rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                            <i class="fas fa-wifi text-[#ee4d2d] text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-lg mb-2">3. Conéctate al WiFi</h3>
+                        <p class="text-gray-600">Abre la app HomeLink y se detectará automáticamente tu red. La configuración es automática</p>
+                    </div>
+
+                    <!-- Paso 4 -->
+                    <div class="text-center">
+                        <div class="bg-white rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                            <i class="fas fa-check-circle text-[#ee4d2d] text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-lg mb-2">4. ¡Listo!</h3>
+                        <p class="text-gray-600">Ya puedes disfrutar de tu conexión segura desde cualquier lugar</p>
+                    </div>
+                </div>
+
+                <!-- Botón de Obtén tu Router -->
+                <div class="text-center mt-12">
+                    <a href="router.html" class="inline-block bg-[#ee4d2d] text-white px-8 py-3 rounded-md hover:opacity-90 transition-colors">
+                        <i class="fas fa-router mr-2"></i>
+                        Obtén tu Router VPN
+                    </a>
+                </div>
+
+                <!-- Nota sobre la App -->
+                <div class="mt-12 bg-white p-6 rounded-lg shadow-sm max-w-2xl mx-auto">
+                    <h3 class="text-xl font-semibold mb-4 flex items-center">
+                        <i class="fas fa-mobile-alt text-[#ee4d2d] mr-2"></i>
+                        App HomeLink
+                    </h3>
+                    <p class="text-gray-700 mb-4">
+                        Nuestra app hace todo más fácil. Descárgala desde tu tienda de aplicaciones favorita:
+                    </p>
+                    <div class="flex justify-center space-x-4">
+                        <a href="#" class="flex items-center bg-black text-white px-6 py-2 rounded-lg hover:bg-gray-800">
+                            <i class="fab fa-apple text-2xl mr-2"></i>
+                            App Store
+                        </a>
+                        <a href="#" class="flex items-center bg-[#ee4d2d] text-white px-6 py-2 rounded-lg hover:opacity-90">
+                            <i class="fab fa-google-play text-2xl mr-2"></i>
+                            Play Store
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Security Features -->
+        <section class="py-20 bg-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold text-center mb-16">Características del Router</h2>
+                <div class="security-grid">
+                    <div class="security-card">
+                        <i class="fas fa-tachometer-alt text-3xl text-[#ee4d2d] mb-4"></i>
+                        <h3 class="text-xl font-bold mb-3">Alta Velocidad</h3>
+                        <p class="text-gray-600">Router de última generación con WiFi 6 para máxima velocidad.</p>
+                    </div>
+                    <div class="security-card">
+                        <i class="fas fa-network-wired text-3xl text-[#ee4d2d] mb-4"></i>
+                        <h3 class="text-xl font-bold mb-3">Múltiples Dispositivos</h3>
+                        <p class="text-gray-600">Conecta hasta 50 dispositivos simultáneamente.</p>
+                    </div>
+                    <div class="security-card">
+                        <i class="fas fa-lock text-3xl text-[#ee4d2d] mb-4"></i>
+                        <h3 class="text-xl font-bold mb-3">VPN Integrada</h3>
+                        <p class="text-gray-600">Conexión VPN automática para todos tus dispositivos.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="security-features bg-white">
+            <div class="container mx-auto px-4 py-16">
+                <h2 class="text-3xl font-bold text-center mb-12">Características de Seguridad</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="security-card">
+                        <i class="fas fa-shield-alt text-3xl text-[#ee4d2d] mb-4"></i>
+                        <h3 class="text-xl font-bold mb-3">Encriptación Avanzada</h3>
+                        <p class="text-gray-600">Protección de datos con encriptación de grado militar.</p>
+                    </div>
+                    <div class="security-card">
+                        <i class="fas fa-wifi text-3xl text-[#ee4d2d] mb-4"></i>
+                        <h3 class="text-xl font-bold mb-3">Conexión Estable</h3>
+                        <p class="text-gray-600">Conecta hasta 50 dispositivos simultáneamente.</p>
+                    </div>
+                    <div class="security-card">
+                        <i class="fas fa-lock text-3xl text-[#ee4d2d] mb-4"></i>
+                        <h3 class="text-xl font-bold mb-3">VPN Integrada</h3>
+                        <p class="text-gray-600">Conexión VPN automática para todos tus dispositivos.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="bg-white shadow-inner pt-12 pb-4 mt-8 w-full border-t">
+        <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-5 gap-8 mb-6">
+            <div>
+                <h3 class="uppercase text-xs font-bold mb-2 text-gray-700">Servicio al Cliente</h3>
+                <ul class="space-y-1 text-sm text-gray-600">
+                    <li><a href="peticiones.html" class="hover:text-[#ee4d2d]">Peticiones, Quejas y Reclamos</a></li>
+                    <li><a href="metodos_pago.html" class="hover:text-[#ee4d2d]">Métodos de Pago</a></li>
+                    <li><a href="devolucion_reembolso.html" class="hover:text-[#ee4d2d]">Devolución y Reembolso</a></li>
+                    <li><a href="garantia.html" class="hover:text-[#ee4d2d]">Garantía HomeLink</a></li>
+                    <li><a href="contactanos.html" class="hover:text-[#ee4d2d]">Contáctanos</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="uppercase text-xs font-bold mb-2 text-gray-700">Acerca de HomeLink</h3>
+                <ul class="space-y-1 text-sm text-gray-600">
+                    <li><a href="sobre_nosotros.html" class="hover:text-[#ee4d2d]">Sobre Nosotros</a></li>
+                    <li><a href="planes_servicios.html" class="hover:text-[#ee4d2d]">Planes y Servicios</a></li>
+                    <li><a href="politica_privacidad.html" class="hover:text-[#ee4d2d]">Política de Privacidad</a></li>
+                    <li><a href="terminos_servicio.html" class="hover:text-[#ee4d2d]">Términos de Servicio</a></li>
+                    <li><a href="soporte_tecnico.html" class="hover:text-[#ee4d2d]">Soporte Técnico</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="uppercase text-xs font-bold mb-2 text-gray-700">Pago</h3>
+                <div class="flex flex-wrap gap-2 items-center mt-2">
+                    <img src="../imagenes/mastercard.png" alt="Mastercard" class="h-5">
+                    <img src="../imagenes/visa.png" alt="Visa" class="h-5">
+                    <img src="../imagenes/diners.png" alt="Diners" class="h-5">
+                    <img src="../imagenes/pse.png" alt="PSE" class="h-5">
+                    <img src="../imagenes/efecty.png" alt="Efecty" class="h-5">
+                </div>
+            </div>
+            <div>
+                <h3 class="uppercase text-xs font-bold mb-2 text-gray-700">Síguenos</h3>
+                <ul class="space-y-1 text-sm text-gray-600">
+                    <li><a href="#" class="hover:text-[#ee4d2d]">Facebook</a></li>
+                    <li><a href="#" class="hover:text-[#ee4d2d]">Instagram</a></li>
+                    <li><a href="#" class="hover:text-[#ee4d2d]">LinkedIn</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="uppercase text-xs font-bold mb-2 text-gray-700">Descargar la App HomeLink</h3>
+                <div class="flex items-center gap-2 mb-2">
+                    <img src="../imagenes/qr.jpg" alt="QR HomeLink" class="w-16 h-16 rounded">
+                    <div class="flex flex-col gap-1">
+                        <img src="../imagenes/google-play-badge.png" alt="Google Play" class="h-6">
+                        <img src="../imagenes/app-store-badge.png" alt="App Store" class="h-6">
+                        <img src="../imagenes/appgallery-badge.png" alt="AppGallery" class="h-6">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center text-xs text-gray-500 border-t pt-4">
+            &copy; 2025 HomeLink. Todos los Derechos Reservados
+        </div>
+    </footer>
+     <!-- Chatbot HomeLink VPN v1.0 -->
+     <div id="chatbot" class="fixed bottom-4 right-4 z-50">
+      <div id="chat-messages" class="hidden bg-white rounded-lg shadow-lg w-80 h-96 flex flex-col">
+          <div class="bg-[#ee4d2d] text-white p-4 rounded-t-lg flex justify-between items-center">
+              <h3>Asistente Virtual</h3>
+              <button id="close-chat" class="text-white hover:text-gray-300">×</button>
+          </div>
+          <div id="messages" class="flex-1 overflow-y-auto p-4 space-y-4"></div>
+          <div class="border-t p-4">
+              <div class="flex space-x-2">
+                  <input type="text" id="user-input" class="flex-1 border rounded-lg px-4 py-2 focus:outline-none focus:border-[#ee4d2d]" placeholder="Escribe tu mensaje...">
+                  <button id="send-message" class="bg-[#ee4d2d] text-white px-4 py-2 rounded-lg hover:bg-[#d13f1d]">Enviar</button>
+              </div>
+          </div>
+      </div>
+      <button id="toggle-chat" class="bg-[#ee4d2d] text-white w-16 h-16 rounded-full shadow-lg flex items-center justify-center hover:bg-[#d13f1d]">
+          <i class="fas fa-comments text-2xl"></i>
+      </button>
+  </div>
+    <script>
+    // Simulación de sesión: cambia esto por tu lógica real de sesión
+    const usuarioLogueado = sessionStorage.getItem('usuarioLogueado'); // true o false
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const misCompras = document.getElementById('mis-compras-link');
+      const monitoreo = document.getElementById('monitoreo-link');
+      const loginBtn = document.getElementById('login-btn');
+      const logoutBtn = document.getElementById('logout-btn');
+
+      if (!usuarioLogueado) {
+        // Oculta los menús solo para usuarios logueados
+        if (misCompras) misCompras.style.display = 'none';
+        if (monitoreo) monitoreo.style.display = 'none';
+        if (logoutBtn) logoutBtn.style.display = 'none';
+        if (loginBtn) loginBtn.style.display = 'inline-block';
+      } else {
+        if (misCompras) misCompras.style.display = 'inline-block';
+        if (monitoreo) monitoreo.style.display = 'inline-block';
+        if (logoutBtn) logoutBtn.style.display = 'inline-block';
+        if (loginBtn) loginBtn.style.display = 'none';
+      }
+    });
+    </script>
+    <script>
+    // Lógica de menú según sesión
+    function actualizarMenu() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        const carritoMenu = document.getElementById('carritoMenu');
+        const comprasMenu = document.getElementById('comprasMenu');
+        const monitoreoMenu = document.getElementById('monitoreoMenu');
+        const loginBtn = document.getElementById('loginBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+        if (user && user.isLoggedIn) {
+            carritoMenu.classList.remove('hidden');
+            comprasMenu.classList.remove('hidden');
+            monitoreoMenu.classList.remove('hidden');
+            loginBtn.classList.add('hidden');
+            logoutBtn.classList.remove('hidden');
+        } else {
+            carritoMenu.classList.add('hidden');
+            comprasMenu.classList.add('hidden');
+            monitoreoMenu.classList.add('hidden');
+            loginBtn.classList.remove('hidden');
+            logoutBtn.classList.add('hidden');
+        }
+    }
+    document.getElementById('logoutBtn').onclick = function() {
+        localStorage.removeItem('user');
+        location.reload();
+    };
+    actualizarMenu();
+// Añadir mensaje al chat
+function addMessage(text, isUser = false) {
+  const messages = document.getElementById('messages');
+  const div = document.createElement('div');
+  div.className = 'mb-2 ' + (isUser ? 'text-right' : 'text-left');
+  div.innerHTML = `<span class="${isUser ? 'bg-[#ee4d2d] text-white' : 'bg-gray-200 text-gray-800'} px-3 py-2 rounded-lg inline-block whitespace-pre-line">${text}</span>`;
+  messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+// Añadir HTML al chat
+function addHtmlMessage(html) {
+  const messages = document.getElementById('messages');
+  const div = document.createElement('div');
+  div.innerHTML = html;
+  messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+// Opciones rápidas como burbujas
+function mostrarOpcionesChat(loggedIn) {
+  const messages = document.getElementById('messages');
+  const opcionesDiv = document.createElement('div');
+  opcionesDiv.className = 'flex flex-wrap gap-2 my-2';
+  // Opciones básicas
+  const opciones = [
+    { label: 'Buscar', action: 'buscar' },
+    { label: 'Ver productos', action: 'ver_productos' }
+  ];
+  // Opciones avanzadas solo si está logueado
+  if (loggedIn) {
+    opciones.push(
+      { label: 'Hacer pedido', action: 'hacer_pedido' },
+      { label: 'Ver mis compras', action: 'ver_mis_compras' },
+      { label: 'Cerrar sesión', action: 'logout' }
+    );
+  } else {
+    opciones.push({ label: 'Iniciar sesión', action: 'login' });
+  }
+  opciones.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.textContent = opt.label;
+    btn.className = 'bg-[#ee4d2d] text-white px-3 py-1 rounded-md font-bold hover:bg-[#d13f1d] transition-colors text-xs';
+    btn.onclick = () => manejarOpcionChat(opt.action);
+    opcionesDiv.appendChild(btn);
+  });
+  messages.appendChild(opcionesDiv);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+// Lógica para manejar cada opción rápida
+async function manejarOpcionChat(action) {
+  if (action === 'buscar') {
+    addMessage('¿Qué deseas buscar? Escribe tu consulta en el chat.', false);
+  } else if (action === 'ver_productos') {
+    mostrarProductosEnChat();
+  } else if (action === 'hacer_pedido') {
+    mostrarCarritoEnChat();
+  } else if (action === 'ver_mis_compras') {
+    mostrarMisComprasEnChat();
+  } else if (action === 'login') {
+    addMessage('Por favor, inicia sesión desde la web para acceder a todas las funciones.', false);
+  } else if (action === 'logout') {
+    localStorage.removeItem('user');
+    addMessage('Has cerrado sesión.', false);
+    setTimeout(()=>location.reload(), 1000);
+  }
+}
+
+// Mostrar productos en el chat
+function mostrarProductosEnChat() {
+  const productos = [
+    { name: 'ASUS RT-AC86U', price: 199.99 },
+    { name: 'TP-Link Archer C2300', price: 179.99 },
+    { name: 'Cudy WR3000E', price: 179.99 },
+    { name: 'Netgear X4S D7800', price: 249.99 }
+  ];
+  const user = JSON.parse(localStorage.getItem('user'));
+  let html = '<div class="space-y-2">';
+  productos.forEach(p => {
+    html += `<div class='flex items-center justify-between bg-gray-100 rounded px-2 py-1'>
+      <span class='font-bold text-[#ee4d2d]'>${p.name}</span>
+      <span class='text-sm'>$${p.price}</span>`;
+    if (user && user.isLoggedIn) {
+      html += `<button class='ml-2 bg-[#ee4d2d] text-white px-2 py-1 rounded text-xs' onclick='agregarAlCarritoChat("${p.name}",${p.price})'>Agregar</button>`;
+    }
+    html += '</div>';
+  });
+  html += '</div>';
+  addMessage('Productos disponibles:', false);
+  addHtmlMessage(html);
+  mostrarOpcionesChat(!!(user && user.isLoggedIn));
+}
+
+// Agregar producto al carrito desde el chat
+window.agregarAlCarritoChat = function(name, price) {
+  const user = JSON.parse(localStorage.getItem('user'));
+  if (!user || !user.isLoggedIn) {
+    addMessage('Debes iniciar sesión para agregar productos al carrito.', false);
+    return;
+  }
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  const idx = cart.findIndex(i => i.name === name);
+  if (idx >= 0) {
+    cart[idx].quantity += 1;
+  } else {
+    cart.push({ name, price, quantity: 1 });
+  }
+  localStorage.setItem('cart', JSON.stringify(cart));
+  addMessage(`${name} agregado al carrito.`, false);
+  mostrarOpcionesChat(true);
+}
+
+// Mostrar carrito en el chat
+function mostrarCarritoEnChat() {
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  if (!cart.length) {
+    addMessage('Tu carrito está vacío.', false);
+    mostrarOpcionesChat(true);
+    return;
+  }
+  let html = '<div class="space-y-2">';
+  cart.forEach(item => {
+    html += `<div class='flex items-center justify-between bg-gray-100 rounded px-2 py-1'>
+      <span>${item.name} x${item.quantity}</span>
+      <span>$${(item.price * item.quantity).toFixed(2)}</span>
+    </div>`;
+  });
+  html += '</div>';
+  html += `<button class='mt-2 bg-[#ee4d2d] text-white px-3 py-1 rounded' onclick='finalizarCompraChat()'>Finalizar compra</button>`;
+  addMessage('Tu carrito:', false);
+  addHtmlMessage(html);
+  mostrarOpcionesChat(true);
+}
+
+// Finalizar compra desde el chat
+window.finalizarCompraChat = async function() {
+  const user = JSON.parse(localStorage.getItem('user'));
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  if (!user || !user.isLoggedIn) {
+    addMessage('Debes iniciar sesión para comprar.', false);
+    return;
+  }
+  if (!cart.length) {
+    addMessage('Tu carrito está vacío.', false);
+    return;
+  }
+  // Simular datos personales (puedes pedirlos en pasos reales)
+  const datos = {
+    persona: 'natural', banco: 'bancolombia', nombres: user.nombre || '', apellidos: '', correo: user.correo, tipo_id: 'CC', documento: '123456789', celular: '3000000000'
+  };
+  const res = await fetch('/comprar', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ userSession: { email: user.correo, isLoggedIn: true }, cart, datos })
+  });
+  const data = await res.json();
+  if (data.id) {
+    localStorage.removeItem('cart');
+    addMessage('¡Compra realizada con éxito! Puedes ver el detalle en Mis Compras.', false);
+  } else {
+    addMessage('No se pudo registrar la compra.', false);
+  }
+  mostrarOpcionesChat(true);
+}
+
+// Mostrar compras en el chat
+async function mostrarMisComprasEnChat() {
+  const user = JSON.parse(localStorage.getItem('user'));
+  if (!user || !user.isLoggedIn) {
+    addMessage('Debes iniciar sesión para ver tus compras.', false);
+    return;
+  }
+  const res = await fetch('/miscompras', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ userSession: { email: user.correo, isLoggedIn: true } })
+  });
+  const compras = await res.json();
+  if (!compras.length) {
+    addMessage('No tienes compras registradas.', false);
+    mostrarOpcionesChat(true);
+    return;
+  }
+  let html = '<div class="space-y-2">';
+  compras.forEach(c => {
+    html += `<div class='bg-gray-100 rounded px-2 py-1 mb-1'>
+      <span class='font-bold text-[#ee4d2d]'>Compra #${c.id_compra}</span> - $${c.total} <br><span class='text-xs'>${c.fecha}</span>
+    </div>`;
+  });
+  html += '</div>';
+  addMessage('Tus compras:', false);
+  addHtmlMessage(html);
+  mostrarOpcionesChat(true);
+}
+
+// Procesar mensaje enviado
+function procesarMensaje(text) {
+  // Aquí puedes poner lógica de respuestas automáticas básicas
+  if (text.toLowerCase().includes('hola')) {
+    addMessage('¡Hola! ¿En qué puedo ayudarte?', false);
+    mostrarOpcionesChat(!!(JSON.parse(localStorage.getItem('user'))?.isLoggedIn));
+  } else {
+    addMessage('No entendí tu mensaje. Usa los botones o pregunta por productos.', false);
+    mostrarOpcionesChat(!!(JSON.parse(localStorage.getItem('user'))?.isLoggedIn));
+  }
+}
+
+// Evento de enviar mensaje
+document.getElementById('send-message').onclick = function() {
+  const input = document.getElementById('user-input');
+  const text = input.value.trim();
+  if (text) {
+    addMessage(text, true);
+    procesarMensaje(text);
+    input.value = '';
+  }
+};
+document.getElementById('user-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') document.getElementById('send-message').click();
+});
+
+// Mostrar bienvenida y opciones al abrir el chat
+const toggleChat = document.getElementById('toggle-chat');
+const chatMessages = document.getElementById('chat-messages');
+const closeChat = document.getElementById('close-chat');
+
+toggleChat.addEventListener('click', () => {
+  chatMessages.classList.toggle('hidden');
+  if (!chatMessages.classList.contains('hidden')) {
+    setTimeout(() => {
+      const messages = document.getElementById('messages');
+      if (!messages.hasChildNodes()) {
+        addWelcomeBubbles();
+        mostrarOpcionesChat(!!(JSON.parse(localStorage.getItem('user'))?.isLoggedIn));
+      }
+    }, 300);
+  }
+});
+closeChat.addEventListener('click', () => {
+  chatMessages.classList.add('hidden');
+});
+
+function addWelcomeBubbles() {
+  const messages = document.getElementById('messages');
+  // Mensaje de bienvenida
+  const div = document.createElement('div');
+  div.className = 'mb-2 text-left';
+  div.innerHTML = `<span class="bg-gray-200 text-gray-800 px-3 py-2 rounded-lg inline-block whitespace-pre-line">
+    ¡Hola! Soy el asistente virtual de HomeLink. ¿En qué puedo ayudarte?<br><br>
+    Puedes preguntarme sobre:
+  </span>`;
+  messages.appendChild(div);
+
+  // Opciones como burbujas
+  const opciones = [
+    { label: 'Qué es HomeLink', color: 'bg-[#ee4d2d] text-white' },
+    { label: 'Cómo funciona', color: 'bg-[#f53d2d] text-white' },
+    { label: 'Servicios', color: 'bg-[#ff9800] text-white' },
+    { label: 'Precios', color: 'bg-[#009688] text-white' },
+    { label: 'Registro', color: 'bg-[#3f51b5] text-white' }
+  ];
+  const opcionesDiv = document.createElement('div');
+  opcionesDiv.className = 'flex flex-wrap gap-2 my-2';
+  opciones.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.textContent = opt.label;
+    btn.className = `${opt.color} px-3 py-1 rounded-full font-bold shadow hover:opacity-90 transition text-xs`;
+    btn.onclick = () => responderOpcionBienvenida(opt.label);
+    opcionesDiv.appendChild(btn);
+  });
+  messages.appendChild(opcionesDiv);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+// Respuestas automáticas para cada burbuja
+function responderOpcionBienvenida(label) {
+  if (label === 'Qué es HomeLink') {
+    addMessage('HomeLink es un servicio innovador que te permite acceder de manera remota a tu red doméstica a través de una conexión VPN segura.', false);
+  } else if (label === 'Cómo funciona') {
+    addMessage('HomeLink opera mediante una VPN (Red Privada Virtual), permitiéndote conectar a tu red doméstica a través de servidores seguros.', false);
+  } else if (label === 'Servicios') {
+    addMessage('Nuestros servicios incluyen:\n- Conexión VPN segura\n- Acceso remoto a tu red\n- Protección de datos\n- Soporte 24/7\n- Configuración personalizada', false);
+  } else if (label === 'Precios') {
+    addMessage('Ofrecemos varios planes:\n- Plan Básico: Conexión VPN\n- Plan Pro: VPN + Acceso remoto\n- Plan Empresarial: Soluciones personalizadas', false);
+  } else if (label === 'Registro') {
+    addMessage('Para registrarte:\n1. Haz clic en \"Mi cuenta\"\n2. Selecciona \"Registrarse\"\n3. Completa el formulario\n4. Verifica tu email\n5. ¡Listo para usar HomeLink!', false);
+  }
+  mostrarOpcionesChat(!!(JSON.parse(localStorage.getItem('user'))?.isLoggedIn));
+}
+    </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (user && user.isLoggedIn && !sessionStorage.getItem('bienvenidaMostrada')) {
+        Swal.fire({
+          icon: 'success',
+          title: '¡Bienvenido!',
+          text: `Hola ${user.nombre}`,
+          timer: 1800,
+          showConfirmButton: false
+        });
+        sessionStorage.setItem('bienvenidaMostrada', '1');
+      }
+    });
+    </script>
+</body>
+</html>

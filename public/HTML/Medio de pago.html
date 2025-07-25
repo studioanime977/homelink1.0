@@ -2,66 +2,422 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Medios de Pago</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Medio de Pago - HomeLink</title>
+  <link rel="stylesheet" href="/STYLES/styles.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    body{background:linear-gradient(135deg,#ee4d2d 0%,#f53d2d 100%);margin:0;min-height:100vh;}
+    .form-container input,
+    .form-container select {
+      font-size: 1.15rem;
+      padding: 14px 12px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      margin-bottom: 8px;
+      background: #fafafa;
+      transition: border 0.2s;
+    }
+    .form-container input:focus,
+    .form-container select:focus {
+      border: 1.5px solid #ee4d2d;
+      outline: none;
+      background: #fff;
+    }
+    .form-container label {
+      font-size: 1.08rem;
+      margin-bottom: 4px;
+      font-weight: 500;
+      color: #d55215;
+    }
+    .form-container .form-group {
+      margin-bottom: 22px;
+    }
+    .btn {
+      background-color: #ee4d2d !important;
+      color: white;
+      border: none;
+      padding: 18px;
+      width: 100%;
+      cursor: pointer;
+      font-size: 1.25rem;
+      margin-top: 18px;
+      border-radius: 10px;
+      font-weight: bold;
+      box-shadow: 0 2px 8px rgba(213,82,21,0.08);
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn:hover {
+      background-color: #d43d1a !important;
+      transform: translateY(-2px) scale(1.03);
+    }
+  </style>
   <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const userSession = JSON.parse(localStorage.getItem("userSession"));
-  if (!userSession || !userSession.isLoggedIn) {
-    window.location.href = 'login.html?redirect=Medio%20de%20pago.html';
-  }
-  const cart = JSON.parse(localStorage.getItem('cart')) || [];
-  if (cart.length === 0) {
-    window.location.href = 'mi carrito.html';
-  }
-  const total = cart.reduce((sum, i) => sum + i.price * i.quantity, 0);
-  document.getElementById('pagarBtn').textContent = `Pagar $${total.toFixed(2)}`;
-  document.getElementById('totalLabel').innerText = `$${total.toFixed(2)}`;
-});
+    document.addEventListener("DOMContentLoaded", () => {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (!user || !user.isLoggedIn) {
+        window.location.href = 'login.html?redirect=Medio%20de%20pago.html';
+        return;
+      }
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      if (cart.length === 0) {
+        window.location.href = 'mi carrito.html';
+      }
+      const total = cart.reduce((sum, i) => sum + i.price * i.quantity, 0);
+      document.getElementById('pagarBtn').textContent = `Pagar $${total.toFixed(2)}`;
+      document.getElementById('totalLabel').innerText = `$${total.toFixed(2)}`;
+    });
   </script>
 </head>
-<body>
-  <h1>Medios de Pago</h1>
-  <form id="paymentForm">
-    <label>Persona:</label><input id="persona" required><br>
-    <label>Banco:</label><input id="banco" required><br>
-    <label>Nombres:</label><input id="nombres" required><br>
-    <label>Apellidos:</label><input id="apellidos" required><br>
-    <label>Correo:</label><input id="correo" type="email" required><br>
-    <label>Tipo ID:</label><input id="tipo-id" required><br>
-    <label>Documento:</label><input id="documento" required><br>
-    <label>Celular:</label><input id="celular" required><br>
-    <button id="pagarBtn" type="submit">Pagar</button><br>
-  </form>
-  <p>Total: <span id="totalLabel"></span></p>
+<body class="min-h-screen flex flex-col items-center justify-center bg-gray-50">
+  <!-- Header -->
+  <header class="bg-white shadow-md py-4 w-full">
+    <div class="container mx-auto flex items-center justify-between px-4">
+      <a href="servicio.html" class="text-2xl font-bold text-[#ee4d2d] flex items-center">
+        <i class="fas fa-credit-card mr-2"></i> Medios de Pago
+      </a>
+      <nav class="space-x-6 flex items-center" id="mainMenu">
+        <a href="servicio.html" class="text-gray-700 hover:text-[#ee4d2d]">Inicio</a>
+        <a href="router.html" class="text-gray-700 hover:text-[#ee4d2d]">Planes</a>
+        <a href="monitoreo.html" class="text-gray-700 hover:text-[#ee4d2d] hidden" id="monitoreoMenu">Monitoreo</a>
+        <a href="mi carrito.html" class="text-gray-700 hover:text-[#ee4d2d] hidden" id="carritoMenu">Mi Carrito</a>
+        <a href="mis compras.html" class="text-gray-700 hover:text-[#ee4d2d] hidden" id="comprasMenu">Mis Compras</a>
+        <a href="login.html" class="text-gray-700 hover:text-[#ee4d2d]" id="loginBtn">Iniciar Sesión</a>
+        <a href="#" class="text-gray-700 hover:text-[#ee4d2d] hidden" id="logoutBtn">Salir</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Bloque de IP -->
+  <section class="w-full flex flex-col items-center justify-center mt-8">
+    <div class="bg-gradient-to-r from-[#ee4d2d] to-[#f53d2d] shadow-lg rounded-xl p-6 text-white text-center max-w-md w-full">
+      <h2 class="text-2xl font-semibold mb-2">Tu IP pública: <span id="ipPublica">Cargando...</span></h2>
+      <h3 class="text-lg mb-2">IP local: <span id="ipLocal">Cargando...</span></h3>
+      <div id="ubicacionBloque" class="transition-all duration-300">
+        <p class="mb-1">Ubicación: <span id="ubicacion">-</span></p>
+        <p>Estado: <span id="estado" class="text-red-300">No protegido</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="flex-1 flex flex-col items-center justify-center">
+    <div class="main-wrapper w-full max-w-4xl bg-white rounded-xl shadow-lg mt-12 flex flex-wrap">
+      <div class="form-container">
+        <h2 class="text-2xl font-bold mb-4 text-[#ee4d2d]">Medio de Pago</h2>
+        <form id="pagoForm" autocomplete="off">
+          <div class="form-group">
+            <label for="persona">Tipo de persona</label>
+            <select id="persona" required>
+              <option value="">Seleccione</option>
+              <option value="natural">Persona Natural</option>
+              <option value="juridica">Persona Jurídica</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="banco">Banco</label>
+            <select id="banco" required>
+              <option value="">Seleccione su banco</option>
+              <option value="bancolombia">Bancolombia</option>
+              <option value="davivienda">Davivienda</option>
+              <option value="Banco de Bogotá">Banco de Bogotá</option>
+              <option value="BBVA">BBVA</option>
+              <option value="Banco Caja Social">Banco Caja Social</option>
+              <option value="Banco de Occidente">Banco de Occidente</option>
+              <option value="otro">Otro</option>
+            </select>
+          </div>
+          <h3>Datos del propietario</h3>
+          <div class="form-group">
+            <label for="nombres">Nombres</label>
+            <input type="text" id="nombres" placeholder="Ingrese sus nombres" required>
+          </div>
+          <div class="form-group">
+            <label for="apellidos">Apellidos</label>
+            <input type="text" id="apellidos" placeholder="Ingrese sus apellidos" required>
+          </div>
+          <div class="form-group">
+            <label for="correo">Correo</label>
+            <input type="email" id="correo" placeholder="Ingrese su correo" required>
+          </div>
+          <div class="form-group">
+            <label for="tipo-id">Tipo de documento</label>
+            <select id="tipo-id" required>
+              <option value="TI">TI</option>
+              <option value="CC">CC</option>
+              <option value="CE">CE</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="documento">Número de documento</label>
+            <input type="text" id="documento" placeholder="Ingrese su número de documento" required autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label for="celular">Número de celular</label>
+            <input type="text" id="celular" placeholder="Ingrese su número de celular" required>
+          </div>
+          <button type="submit" id="pagarBtn" class="btn">Pagar</button>
+        </form>
+      </div>
+      <div class="summary-container">
+        <h1 class="text-2xl font-extrabold text-[#ee4d2d] mb-2 flex items-center gap-2"><i class="fas fa-shield-alt"></i> HomeLink VPN</h1>
+        <div class="payment-info">
+          <h2 class="text-lg font-bold text-[#ee4d2d] mb-1">Total a pagar</h2>
+          <p id="totalLabel" class="text-3xl font-extrabold text-[#ee4d2d] mb-2" style="font-family:'Segoe UI Black',Impact,sans-serif;">$0.00</p>
+          <p class="font-bold text-[#d55215] text-base mb-1"><i class="fas fa-credit-card mr-1"></i>Pago Regular:</p>
+          <hr class="my-2 border-[#ee4d2d]/30">
+          <h3 class="font-bold text-[#ee4d2d] text-base mb-2 flex items-center"><i class="fas fa-list-alt mr-2"></i>Detalle del pago</h3>
+          <div id="pagoResumen"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white shadow-inner pt-12 pb-4 mt-8 w-full border-t">
+    <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-5 gap-8 mb-6">
+      <div>
+        <h3 class="uppercase text-xs font-bold mb-2 text-gray-700">Servicio al Cliente</h3>
+        <ul class="space-y-1 text-sm text-gray-600">
+          <li><a href="#" class="hover:text-[#ee4d2d]">Peticiones, Quejas y Reclamos</a></li>
+          <li><a href="#" class="hover:text-[#ee4d2d]">Métodos de Pago</a></li>
+          <li><a href="#" class="hover:text-[#ee4d2d]">Devolución y Reembolso</a></li>
+          <li><a href="#" class="hover:text-[#ee4d2d]">Garantía HomeLink</a></li>
+          <li><a href="#" class="hover:text-[#ee4d2d]">Contáctanos</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="uppercase text-xs font-bold mb-2 text-gray-700">Acerca de HomeLink</h3>
+        <ul class="space-y-1 text-sm text-gray-600">
+          <li><a href="#" class="hover:text-[#ee4d2d]">Sobre Nosotros</a></li>
+          <li><a href="#" class="hover:text-[#ee4d2d]">Planes y Servicios</a></li>
+          <li><a href="#" class="hover:text-[#ee4d2d]">Política de Privacidad</a></li>
+          <li><a href="#" class="hover:text-[#ee4d2d]">Términos de Servicio</a></li>
+          <li><a href="#" class="hover:text-[#ee4d2d]">Soporte Técnico</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="uppercase text-xs font-bold mb-2 text-gray-700">Pago</h3>
+        <div class="flex flex-wrap gap-2 items-center mt-2">
+          <img src="../imagenes/mastercard.png" alt="Mastercard" class="h-5">
+          <img src="../imagenes/visa.png" alt="Visa" class="h-5">
+          <img src="../imagenes/diners.png" alt="Diners" class="h-5">
+          <img src="../imagenes/pse.png" alt="PSE" class="h-5">
+          <img src="../imagenes/efecty.png" alt="Efecty" class="h-5">
+        </div>
+      </div>
+      <div>
+        <h3 class="uppercase text-xs font-bold mb-2 text-gray-700">Síguenos</h3>
+        <ul class="space-y-1 text-sm text-gray-600">
+          <li><a href="#" class="hover:text-[#ee4d2d]">Facebook</a></li>
+          <li><a href="#" class="hover:text-[#ee4d2d]">Instagram</a></li>
+          <li><a href="#" class="hover:text-[#ee4d2d]">LinkedIn</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="uppercase text-xs font-bold mb-2 text-gray-700">Descargar la App HomeLink</h3>
+        <div class="flex items-center gap-2 mb-2">
+          <img src="../imagenes/qr.jpg" alt="QR HomeLink" class="w-16 h-16 rounded">
+          <div class="flex flex-col gap-1">
+            <img src="../imagenes/google-play-badge.png" alt="Google Play" class="h-6">
+            <img src="../imagenes/app-store-badge.png" alt="App Store" class="h-6">
+            <img src="../imagenes/appgallery-badge.png" alt="AppGallery" class="h-6">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center text-xs text-gray-500 border-t pt-4">
+      &copy; 2025 HomeLink. Todos los Derechos Reservados
+    </div>
+  </footer>
+  <!-- Chatbot HomeLink VPN v1.0 -->
+  <div id="chatbot" class="fixed bottom-4 right-4 z-50">
+    <div id="chat-messages" class="hidden bg-white rounded-lg shadow-lg w-80 h-96 flex flex-col">
+      <div class="bg-[#ee4d2d] text-white p-4 rounded-t-lg flex justify-between items-center">
+        <h3>Asistente Virtual</h3>
+        <button id="close-chat" class="text-white hover:text-gray-300">×</button>
+      </div>
+      <div id="messages" class="flex-1 overflow-y-auto p-4 space-y-4"></div>
+      <div class="border-t p-4">
+        <div class="flex space-x-2">
+          <input type="text" id="user-input" class="flex-1 border rounded-lg px-4 py-2 focus:outline-none focus:border-[#ee4d2d]" placeholder="Escribe tu mensaje...">
+          <button id="send-message" class="bg-[#ee4d2d] text-white px-4 py-2 rounded-lg hover:bg-[#d13f1d]">Enviar</button>
+        </div>
+      </div>
+    </div>
+    <button id="toggle-chat" class="bg-[#ee4d2d] text-white w-16 h-16 rounded-full shadow-lg flex items-center justify-center hover:bg-[#d13f1d]">
+      <i class="fas fa-comments text-2xl"></i>
+    </button>
+  </div>
   <script>
-document.getElementById('paymentForm').addEventListener('submit', async e => {
-  e.preventDefault();
-  const userSession = JSON.parse(localStorage.getItem("userSession"));
-  const cart = JSON.parse(localStorage.getItem('cart')) || [];
-  const paymentInfo = {
-    persona: document.getElementById('persona').value,
-    banco: document.getElementById('banco').value,
-    nombres: document.getElementById('nombres').value,
-    apellidos: document.getElementById('apellidos').value,
-    correo: document.getElementById('correo').value,
-    tipoId: document.getElementById('tipo-id').value,
-    documento: document.getElementById('documento').value,
-    celular: document.getElementById('celular').value
-  };
-  const res = await fetch('/api/comprar', {
-    method: 'POST',
-    headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({ userSession, cart, paymentInfo })
-  });
-  const data = await res.json();
-  if (data.id) {
-    localStorage.removeItem('cart');
-    alert('¡Compra exitosa! 🎉🛒');
-    window.location.href = 'mis compras.html';
+    function renderPago() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const pagoResumen = document.getElementById('pagoResumen');
+      const totalLabel = document.getElementById('totalLabel');
+      if (!cart.length) {
+        pagoResumen.innerHTML = '<p class="text-gray-500">No hay productos en el carrito.</p>';
+        totalLabel.textContent = '$0.00';
+        document.getElementById('pagarBtn').disabled = true;
+        return;
+      }
+      let total = 0;
+      pagoResumen.innerHTML = `
+        <div class='rounded-xl overflow-hidden border border-[#ee4d2d]/30 bg-white shadow-sm'>
+          <div class='bg-gradient-to-r from-[#ee4d2d]/90 to-[#f53d2d]/80 text-white px-4 py-2 font-bold text-lg'>
+            <i class="fas fa-list-alt mr-2"></i>Detalle del pago
+          </div>
+          <div class='divide-y divide-[#ee4d2d]/20'>
+            ${cart.map(item => {
+              total += item.price * item.quantity;
+              return `<div class='flex items-center justify-between px-4 py-2 hover:bg-[#fff3ef] transition'>
+                <span class='font-semibold text-[#d55215]'>${item.name} <span class='text-gray-700 font-normal'>x${item.quantity}</span></span>
+                <span class='font-bold text-[#ee4d2d]'>$${(item.price * item.quantity).toFixed(2)}</span>
+              </div>`;
+            }).join('')}
+          </div>
+        </div>
+      `;
+      totalLabel.textContent = `$${total.toFixed(2)}`;
+    }
+    renderPago();
+
+    // Rellenar datos si el usuario está logueado
+    window.addEventListener('DOMContentLoaded', () => {
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (user) {
+        let nombres = user.nombre || '';
+        let apellidos = user.apellidos || '';
+        if (!apellidos && nombres) {
+          // Separar nombres y apellidos si vienen juntos en 'nombre'
+          const partes = nombres.trim().split(' ');
+          if (partes.length > 2) {
+            apellidos = partes.slice(-2).join(' ');
+            nombres = partes.slice(0, -2).join(' ');
+          }
+        }
+        document.getElementById('nombres').value = nombres;
+        document.getElementById('apellidos').value = apellidos;
+        document.getElementById('correo').value = user.correo || '';
+        document.getElementById('celular').value = user.celular || '';
+        // Si tienes documento, etc. en user, también los puedes rellenar aquí
+      }
+    });
+
+    // Validar y enviar compra
+    const pagoForm = document.getElementById('pagoForm');
+    pagoForm.onsubmit = async function(e) {
+      e.preventDefault();
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (!cart.length || !user) return;
+      // Validar campos
+      const datos = {
+        persona: document.getElementById('persona').value,
+        banco: document.getElementById('banco').value,
+        nombres: document.getElementById('nombres').value,
+        apellidos: document.getElementById('apellidos').value,
+        correo: document.getElementById('correo').value,
+        tipo_id: document.getElementById('tipo-id').value,
+        documento: document.getElementById('documento').value,
+        celular: document.getElementById('celular').value
+      };
+      for (const key in datos) {
+        if (!datos[key]) {
+          Swal.fire({icon:'warning',title:'Campo obligatorio',text:`Debes completar el campo: ${key}`});
+          return;
+        }
+      }
+      // Enviar compra
+      const res = await fetch('/comprar', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ userSession: { email: user.correo, isLoggedIn: true }, cart, datos })
+      });
+      const data = await res.json();
+      if (data.id) {
+        localStorage.removeItem('cart');
+        Swal.fire({icon:'success',title:'¡Pago realizado!',text:'Tu compra ha sido registrada.',timer:1500,showConfirmButton:false});
+        setTimeout(()=>window.location.href='mis compras.html',1600);
+      } else {
+        Swal.fire({icon:'error',title:'Error',text:'No se pudo registrar la compra'});
+      }
+    };
+
+// Lógica de menú según sesión
+function actualizarMenu() {
+  const user = JSON.parse(localStorage.getItem('user'));
+  const carritoMenu = document.getElementById('carritoMenu');
+  const comprasMenu = document.getElementById('comprasMenu');
+  const monitoreoMenu = document.getElementById('monitoreoMenu');
+  const loginBtn = document.getElementById('loginBtn');
+  const logoutBtn = document.getElementById('logoutBtn');
+  if (user && user.isLoggedIn) {
+    carritoMenu.classList.remove('hidden');
+    comprasMenu.classList.remove('hidden');
+    monitoreoMenu.classList.remove('hidden');
+    loginBtn.classList.add('hidden');
+    logoutBtn.classList.remove('hidden');
   } else {
-    alert('Error al procesar tu compra');
+    carritoMenu.classList.add('hidden');
+    comprasMenu.classList.add('hidden');
+    monitoreoMenu.classList.add('hidden');
+    loginBtn.classList.remove('hidden');
+    logoutBtn.classList.add('hidden');
   }
-});
+}
+document.getElementById('logoutBtn').onclick = function() {
+  localStorage.removeItem('user');
+  location.reload();
+};
+actualizarMenu();
+
+// Bloque de IP: pública y local
+async function obtenerIPPublica() {
+  try {
+    const res = await fetch('https://ipapi.co/json/');
+    const data = await res.json();
+    document.getElementById('ipPublica').textContent = data.ip;
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user && user.isLoggedIn) {
+      document.getElementById('ubicacion').textContent = `${data.city}, ${data.country_name}`;
+      document.getElementById('estado').textContent = 'Protegido';
+      document.getElementById('estado').classList.remove('text-red-300');
+      document.getElementById('estado').classList.add('text-green-300');
+    } else {
+      document.getElementById('ubicacion').textContent = '-';
+      document.getElementById('estado').textContent = 'No protegido';
+      document.getElementById('estado').classList.remove('text-green-300');
+      document.getElementById('estado').classList.add('text-red-300');
+    }
+  } catch (e) {
+    document.getElementById('ipPublica').textContent = 'No disponible';
+    document.getElementById('ubicacion').textContent = '-';
+    document.getElementById('estado').textContent = 'No disponible';
+  }
+}
+function obtenerIPLocal() {
+  const RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
+  if (!RTCPeerConnection) {
+    document.getElementById('ipLocal').textContent = 'No disponible';
+    return;
+  }
+  const pc = new RTCPeerConnection({iceServers:[]});
+  pc.createDataChannel('');
+  pc.createOffer().then(offer => pc.setLocalDescription(offer));
+  pc.onicecandidate = function(event) {
+    if (!event || !event.candidate) return;
+    const ipRegex = /([0-9]{1,3}(\.[0-9]{1,3}){3})/;
+    const ipMatch = ipRegex.exec(event.candidate.candidate);
+    if (ipMatch) {
+      document.getElementById('ipLocal').textContent = ipMatch[1];
+      pc.onicecandidate = null;
+    }
+  };
+}
+obtenerIPPublica();
+obtenerIPLocal();
   </script>
 </body>
 </html>

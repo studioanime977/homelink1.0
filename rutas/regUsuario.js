@@ -1,5 +1,45 @@
 const bcryptjs = require('bcryptjs');
 const db = require('./db');
+const router  = require('express').Router();
+const multer  = require('multer');
+const path    = require('path');
+const pool    = require('../config/conexion');
+
+// Configuración Multer
+const storage = multer.diskStorage({
+  destination: path.join(__dirname, '../public/uploads'),
+  filename: (_req, file, cb) =>
+    cb(null, Date.now() + path.extname(file.originalname))
+});
+const upload = multer({ storage });
+
+router.post('/api/registro', upload.single('foto'), async (req, res) => {
+  const { nombre, apellido, correo, contrasena, confirmarContrasena } = req.body;
+
+  if (!nombre || !apellido || !correo || !contrasena || !confirmarContrasena)
+    return res.status(400).json({ ok:false, error:'Faltan campos' });
+
+  if (contrasena !== confirmarContrasena)
+    return res.json({ ok:false, error:'Las contraseñas no coinciden' });
+
+  try {
+    const [dup] = await pool.execute('SELECT correo FROM usuarios WHERE correo=?',[correo.trim()]);
+    if (dup.length) return res.json({ ok:false, error:'Correo ya registrado' });
+
+    const hash = await bcrypt.hash(contrasena,10);
+    const foto = req.file ? `/uploads/${req.file.filename}` : '/img/default.png';
+    const nombreCompleto = `${nombre.trim()} ${apellido.trim()}`;
+
+    await pool.execute(
+      'INSERT INTO usuarios (id_usuario,nombre,correo,contrasena,foto) VALUES (UUID(),?,?,?,?)',
+      [nombreCompleto, correo.trim(), hash, foto]
+    );
+    res.json({ ok:true });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ ok:false, error:'Error de servidor' });
+  }
+});
 
 async function registrarUsuario(datos, res) {
   const { campoApe, campoNom, selectSex, campoFec, campoTel, campoDir, campoBar, campoMai, campoPas } = datos;
@@ -25,4 +65,4 @@ async function registrarUsuario(datos, res) {
   }
 }
 
-module.exports = registrarUsuario;
+module.exports = { registrarUsuario, router };

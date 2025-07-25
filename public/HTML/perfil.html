@@ -1,2 +1,434 @@
 <!DOCTYPE html>
-<html lang="es"><head><meta charset="UTF-8"><title>perfil</title></head><body><h1>perfil</h1><p>Contenido protegido. Debes iniciar sesión.</p></body></html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil - HomeLink VPN</title>
+  <link rel="stylesheet" href="/STYLES/styles.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="min-h-screen flex flex-col">
+  <!-- Encabezado HomeLink VPN v1.0 -->
+  <header class="bg-white shadow-md py-4 w-full">
+    <div class="container mx-auto flex items-center justify-between px-4">
+      <a href="servicio.html" class="text-2xl font-bold text-[#ee4d2d] flex items-center">
+        <i class="fas fa-user-circle mr-2"></i> Perfil
+      </a>
+      <nav class="space-x-6 flex items-center" id="mainMenu">
+        <a href="servicio.html" class="text-gray-700 hover:text-[#ee4d2d]">Inicio</a>
+        <a href="router.html" class="text-gray-700 hover:text-[#ee4d2d]">Planes</a>
+        <a href="monitoreo.html" class="text-gray-700 hover:text-[#ee4d2d] hidden" id="monitoreoMenu">Monitoreo</a>
+        <a href="mi carrito.html" class="text-gray-700 hover:text-[#ee4d2d] hidden" id="carritoMenu">Mi Carrito</a>
+        <a href="mis compras.html" class="text-gray-700 hover:text-[#ee4d2d] hidden" id="comprasMenu">Mis Compras</a>
+        <a href="login.html" class="text-gray-700 hover:text-[#ee4d2d]" id="loginBtn">Iniciar Sesión</a>
+        <a href="#" class="text-gray-700 hover:text-[#ee4d2d] hidden" id="logoutBtn">Salir</a>
+      </nav>
+    </div>
+  </header>
+  <!-- Fin Encabezado v1.0 -->
+  <!-- Main Content -->
+  <main class="flex-1 flex flex-col items-center justify-center">
+    <div class="bg-white rounded-xl shadow-lg p-8 max-w-md w-full text-center">
+      <h1 class="text-3xl font-bold text-[#ee4d2d] mb-4">Perfil de Usuario</h1>
+      <p class="text-gray-700">Contenido protegido. Debes iniciar sesión.</p>
+    </div>
+  </main>
+  <!-- Footer -->
+  <footer class="bg-white shadow-inner pt-12 pb-4 mt-8 w-full border-t">
+    <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-5 gap-8 mb-6">
+      <div>
+        <h3 class="uppercase text-xs font-bold mb-2 text-gray-700">Servicio al Cliente</h3>
+        <ul class="space-y-1 text-sm text-gray-600">
+          <li><a href="#" class="hover:text-[#ee4d2d]">Peticiones, Quejas y Reclamos</a></li>
+          <li><a href="#" class="hover:text-[#ee4d2d]">Métodos de Pago</a></li>
+          <li><a href="#" class="hover:text-[#ee4d2d]">Devolución y Reembolso</a></li>
+          <li><a href="#" class="hover:text-[#ee4d2d]">Garantía HomeLink</a></li>
+          <li><a href="#" class="hover:text-[#ee4d2d]">Contáctanos</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="uppercase text-xs font-bold mb-2 text-gray-700">Acerca de HomeLink</h3>
+        <ul class="space-y-1 text-sm text-gray-600">
+          <li><a href="#" class="hover:text-[#ee4d2d]">Sobre Nosotros</a></li>
+          <li><a href="#" class="hover:text-[#ee4d2d]">Planes y Servicios</a></li>
+          <li><a href="#" class="hover:text-[#ee4d2d]">Política de Privacidad</a></li>
+          <li><a href="#" class="hover:text-[#ee4d2d]">Términos de Servicio</a></li>
+          <li><a href="#" class="hover:text-[#ee4d2d]">Soporte Técnico</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="uppercase text-xs font-bold mb-2 text-gray-700">Pago</h3>
+        <div class="flex flex-wrap gap-2 items-center mt-2">
+          <img src="../imagenes/mastercard.png" alt="Mastercard" class="h-5">
+          <img src="../imagenes/visa.png" alt="Visa" class="h-5">
+          <img src="../imagenes/diners.png" alt="Diners" class="h-5">
+          <img src="../imagenes/pse.png" alt="PSE" class="h-5">
+          <img src="../imagenes/efecty.png" alt="Efecty" class="h-5">
+        </div>
+      </div>
+      <div>
+        <h3 class="uppercase text-xs font-bold mb-2 text-gray-700">Síguenos</h3>
+        <ul class="space-y-1 text-sm text-gray-600">
+          <li><a href="#" class="hover:text-[#ee4d2d]">Facebook</a></li>
+          <li><a href="#" class="hover:text-[#ee4d2d]">Instagram</a></li>
+          <li><a href="#" class="hover:text-[#ee4d2d]">LinkedIn</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="uppercase text-xs font-bold mb-2 text-gray-700">Descargar la App HomeLink</h3>
+        <div class="flex items-center gap-2 mb-2">
+          <img src="../imagenes/qr.jpg" alt="QR HomeLink" class="w-16 h-16 rounded">
+          <div class="flex flex-col gap-1">
+            <img src="../imagenes/google-play-badge.png" alt="Google Play" class="h-6">
+            <img src="../imagenes/app-store-badge.png" alt="App Store" class="h-6">
+            <img src="../imagenes/appgallery-badge.png" alt="AppGallery" class="h-6">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center text-xs text-gray-500 border-t pt-4">
+      &copy; 2025 HomeLink. Todos los Derechos Reservados
+    </div>
+  </footer>
+<!-- Chatbot HomeLink VPN v1.0 -->
+<div id="chatbot" class="fixed bottom-4 right-4 z-50">
+  <div id="chat-messages" class="hidden bg-white rounded-lg shadow-lg w-80 h-96 flex flex-col">
+      <div class="bg-[#ee4d2d] text-white p-4 rounded-t-lg flex justify-between items-center">
+          <h3>Asistente Virtual</h3>
+          <button id="close-chat" class="text-white hover:text-gray-300">×</button>
+      </div>
+      <div id="messages" class="flex-1 overflow-y-auto p-4 space-y-4"></div>
+      <div class="border-t p-4">
+          <div class="flex space-x-2">
+              <input type="text" id="user-input" class="flex-1 border rounded-lg px-4 py-2 focus:outline-none focus:border-[#ee4d2d]" placeholder="Escribe tu mensaje...">
+              <button id="send-message" class="bg-[#ee4d2d] text-white px-4 py-2 rounded-lg hover:bg-[#d13f1d]">Enviar</button>
+          </div>
+      </div>
+  </div>
+  <button id="toggle-chat" class="bg-[#ee4d2d] text-white w-16 h-16 rounded-full shadow-lg flex items-center justify-center hover:bg-[#d13f1d]">
+      <i class="fas fa-comments text-2xl"></i>
+  </button>
+</div>
+<script>
+// Lógica de menú según sesión
+function actualizarMenu() {
+  const user = JSON.parse(localStorage.getItem('user'));
+  const carritoMenu = document.getElementById('carritoMenu');
+  const comprasMenu = document.getElementById('comprasMenu');
+  const monitoreoMenu = document.getElementById('monitoreoMenu');
+  const loginBtn = document.getElementById('loginBtn');
+  const logoutBtn = document.getElementById('logoutBtn');
+  if (user && user.isLoggedIn) {
+    carritoMenu.classList.remove('hidden');
+    comprasMenu.classList.remove('hidden');
+    monitoreoMenu.classList.remove('hidden');
+    loginBtn.classList.add('hidden');
+    logoutBtn.classList.remove('hidden');
+  } else {
+    carritoMenu.classList.add('hidden');
+    comprasMenu.classList.add('hidden');
+    monitoreoMenu.classList.add('hidden');
+    loginBtn.classList.remove('hidden');
+    logoutBtn.classList.add('hidden');
+  }
+}
+document.getElementById('logoutBtn').onclick = function() {
+  localStorage.removeItem('user');
+  location.reload();
+};
+actualizarMenu();
+
+// Añadir mensaje al chat
+function addMessage(text, isUser = false) {
+  const messages = document.getElementById('messages');
+  const div = document.createElement('div');
+  div.className = 'mb-2 ' + (isUser ? 'text-right' : 'text-left');
+  div.innerHTML = `<span class="${isUser ? 'bg-[#ee4d2d] text-white' : 'bg-gray-200 text-gray-800'} px-3 py-2 rounded-lg inline-block whitespace-pre-line">${text}</span>`;
+  messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+// Añadir HTML al chat
+function addHtmlMessage(html) {
+  const messages = document.getElementById('messages');
+  const div = document.createElement('div');
+  div.innerHTML = html;
+  messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+// Opciones rápidas como burbujas
+function mostrarOpcionesChat(loggedIn) {
+  const messages = document.getElementById('messages');
+  const opcionesDiv = document.createElement('div');
+  opcionesDiv.className = 'flex flex-wrap gap-2 my-2';
+  // Opciones básicas
+  const opciones = [
+    { label: 'Buscar', action: 'buscar' },
+    { label: 'Ver productos', action: 'ver_productos' }
+  ];
+  // Opciones avanzadas solo si está logueado
+  if (loggedIn) {
+    opciones.push(
+      { label: 'Hacer pedido', action: 'hacer_pedido' },
+      { label: 'Ver mis compras', action: 'ver_mis_compras' },
+      { label: 'Cerrar sesión', action: 'logout' }
+    );
+  } else {
+    opciones.push({ label: 'Iniciar sesión', action: 'login' });
+  }
+  opciones.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.textContent = opt.label;
+    btn.className = 'bg-[#ee4d2d] text-white px-3 py-1 rounded-md font-bold hover:bg-[#d13f1d] transition-colors text-xs';
+    btn.onclick = () => manejarOpcionChat(opt.action);
+    opcionesDiv.appendChild(btn);
+  });
+  messages.appendChild(opcionesDiv);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+// Lógica para manejar cada opción rápida
+async function manejarOpcionChat(action) {
+  if (action === 'buscar') {
+    addMessage('¿Qué deseas buscar? Escribe tu consulta en el chat.', false);
+  } else if (action === 'ver_productos') {
+    mostrarProductosEnChat();
+  } else if (action === 'hacer_pedido') {
+    mostrarCarritoEnChat();
+  } else if (action === 'ver_mis_compras') {
+    mostrarMisComprasEnChat();
+  } else if (action === 'login') {
+    addMessage('Por favor, inicia sesión desde la web para acceder a todas las funciones.', false);
+  } else if (action === 'logout') {
+    localStorage.removeItem('user');
+    addMessage('Has cerrado sesión.', false);
+    setTimeout(()=>location.reload(), 1000);
+  }
+}
+
+// Mostrar productos en el chat
+function mostrarProductosEnChat() {
+  const productos = [
+    { name: 'ASUS RT-AC86U', price: 199.99 },
+    { name: 'TP-Link Archer C2300', price: 179.99 },
+    { name: 'Cudy WR3000E', price: 179.99 },
+    { name: 'Netgear X4S D7800', price: 249.99 }
+  ];
+  const user = JSON.parse(localStorage.getItem('user'));
+  let html = '<div class="space-y-2">';
+  productos.forEach(p => {
+    html += `<div class='flex items-center justify-between bg-gray-100 rounded px-2 py-1'>
+      <span class='font-bold text-[#ee4d2d]'>${p.name}</span>
+      <span class='text-sm'>$${p.price}</span>`;
+    if (user && user.isLoggedIn) {
+      html += `<button class='ml-2 bg-[#ee4d2d] text-white px-2 py-1 rounded text-xs' onclick='agregarAlCarritoChat("${p.name}",${p.price})'>Agregar</button>`;
+    }
+    html += '</div>';
+  });
+  html += '</div>';
+  addMessage('Productos disponibles:', false);
+  addHtmlMessage(html);
+  mostrarOpcionesChat(!!(user && user.isLoggedIn));
+}
+
+// Agregar producto al carrito desde el chat
+window.agregarAlCarritoChat = function(name, price) {
+  const user = JSON.parse(localStorage.getItem('user'));
+  if (!user || !user.isLoggedIn) {
+    addMessage('Debes iniciar sesión para agregar productos al carrito.', false);
+    return;
+  }
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  const idx = cart.findIndex(i => i.name === name);
+  if (idx >= 0) {
+    cart[idx].quantity += 1;
+  } else {
+    cart.push({ name, price, quantity: 1 });
+  }
+  localStorage.setItem('cart', JSON.stringify(cart));
+  addMessage(`${name} agregado al carrito.`, false);
+  mostrarOpcionesChat(true);
+}
+
+// Mostrar carrito en el chat
+function mostrarCarritoEnChat() {
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  if (!cart.length) {
+    addMessage('Tu carrito está vacío.', false);
+    mostrarOpcionesChat(true);
+    return;
+  }
+  let html = '<div class="space-y-2">';
+  cart.forEach(item => {
+    html += `<div class='flex items-center justify-between bg-gray-100 rounded px-2 py-1'>
+      <span>${item.name} x${item.quantity}</span>
+      <span>$${(item.price * item.quantity).toFixed(2)}</span>
+    </div>`;
+  });
+  html += '</div>';
+  html += `<button class='mt-2 bg-[#ee4d2d] text-white px-3 py-1 rounded' onclick='finalizarCompraChat()'>Finalizar compra</button>`;
+  addMessage('Tu carrito:', false);
+  addHtmlMessage(html);
+  mostrarOpcionesChat(true);
+}
+
+// Finalizar compra desde el chat
+window.finalizarCompraChat = async function() {
+  const user = JSON.parse(localStorage.getItem('user'));
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  if (!user || !user.isLoggedIn) {
+    addMessage('Debes iniciar sesión para comprar.', false);
+    return;
+  }
+  if (!cart.length) {
+    addMessage('Tu carrito está vacío.', false);
+    return;
+  }
+  // Simular datos personales (puedes pedirlos en pasos reales)
+  const datos = {
+    persona: 'natural', banco: 'bancolombia', nombres: user.nombre || '', apellidos: '', correo: user.correo, tipo_id: 'CC', documento: '123456789', celular: '3000000000'
+  };
+  const res = await fetch('/comprar', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ userSession: { email: user.correo, isLoggedIn: true }, cart, datos })
+  });
+  const data = await res.json();
+  if (data.id) {
+    localStorage.removeItem('cart');
+    addMessage('¡Compra realizada con éxito! Puedes ver el detalle en Mis Compras.', false);
+  } else {
+    addMessage('No se pudo registrar la compra.', false);
+  }
+  mostrarOpcionesChat(true);
+}
+
+// Mostrar compras en el chat
+async function mostrarMisComprasEnChat() {
+  const user = JSON.parse(localStorage.getItem('user'));
+  if (!user || !user.isLoggedIn) {
+    addMessage('Debes iniciar sesión para ver tus compras.', false);
+    return;
+  }
+  const res = await fetch('/miscompras', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ userSession: { email: user.correo, isLoggedIn: true } })
+  });
+  const compras = await res.json();
+  if (!compras.length) {
+    addMessage('No tienes compras registradas.', false);
+    mostrarOpcionesChat(true);
+    return;
+  }
+  let html = '<div class="space-y-2">';
+  compras.forEach(c => {
+    html += `<div class='bg-gray-100 rounded px-2 py-1 mb-1'>
+      <span class='font-bold text-[#ee4d2d]'>Compra #${c.id_compra}</span> - $${c.total} <br><span class='text-xs'>${c.fecha}</span>
+    </div>`;
+  });
+  html += '</div>';
+  addMessage('Tus compras:', false);
+  addHtmlMessage(html);
+  mostrarOpcionesChat(true);
+}
+
+// Procesar mensaje enviado
+function procesarMensaje(text) {
+  // Aquí puedes poner lógica de respuestas automáticas básicas
+  if (text.toLowerCase().includes('hola')) {
+    addMessage('¡Hola! ¿En qué puedo ayudarte?', false);
+    mostrarOpcionesChat(!!(JSON.parse(localStorage.getItem('user'))?.isLoggedIn));
+  } else {
+    addMessage('No entendí tu mensaje. Usa los botones o pregunta por productos.', false);
+    mostrarOpcionesChat(!!(JSON.parse(localStorage.getItem('user'))?.isLoggedIn));
+  }
+}
+
+// Evento de enviar mensaje
+document.getElementById('send-message').onclick = function() {
+  const input = document.getElementById('user-input');
+  const text = input.value.trim();
+  if (text) {
+    addMessage(text, true);
+    procesarMensaje(text);
+    input.value = '';
+  }
+};
+document.getElementById('user-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') document.getElementById('send-message').click();
+});
+
+// Mostrar bienvenida y opciones al abrir el chat
+const toggleChat = document.getElementById('toggle-chat');
+const chatMessages = document.getElementById('chat-messages');
+const closeChat = document.getElementById('close-chat');
+
+toggleChat.addEventListener('click', () => {
+  chatMessages.classList.toggle('hidden');
+  if (!chatMessages.classList.contains('hidden')) {
+    setTimeout(() => {
+      const messages = document.getElementById('messages');
+      if (!messages.hasChildNodes()) {
+        addWelcomeBubbles();
+        mostrarOpcionesChat(!!(JSON.parse(localStorage.getItem('user'))?.isLoggedIn));
+      }
+    }, 300);
+  }
+});
+closeChat.addEventListener('click', () => {
+  chatMessages.classList.add('hidden');
+});
+
+function addWelcomeBubbles() {
+  const messages = document.getElementById('messages');
+  // Mensaje de bienvenida
+  const div = document.createElement('div');
+  div.className = 'mb-2 text-left';
+  div.innerHTML = `<span class="bg-gray-200 text-gray-800 px-3 py-2 rounded-lg inline-block whitespace-pre-line">
+    ¡Hola! Soy el asistente virtual de HomeLink. ¿En qué puedo ayudarte?<br><br>
+    Puedes preguntarme sobre:
+  </span>`;
+  messages.appendChild(div);
+
+  // Opciones como burbujas
+  const opciones = [
+    { label: 'Qué es HomeLink', color: 'bg-[#ee4d2d] text-white' },
+    { label: 'Cómo funciona', color: 'bg-[#f53d2d] text-white' },
+    { label: 'Servicios', color: 'bg-[#ff9800] text-white' },
+    { label: 'Precios', color: 'bg-[#009688] text-white' },
+    { label: 'Registro', color: 'bg-[#3f51b5] text-white' }
+  ];
+  const opcionesDiv = document.createElement('div');
+  opcionesDiv.className = 'flex flex-wrap gap-2 my-2';
+  opciones.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.textContent = opt.label;
+    btn.className = `${opt.color} px-3 py-1 rounded-full font-bold shadow hover:opacity-90 transition text-xs`;
+    btn.onclick = () => responderOpcionBienvenida(opt.label);
+    opcionesDiv.appendChild(btn);
+  });
+  messages.appendChild(opcionesDiv);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+// Respuestas automáticas para cada burbuja
+function responderOpcionBienvenida(label) {
+  if (label === 'Qué es HomeLink') {
+    addMessage('HomeLink es un servicio innovador que te permite acceder de manera remota a tu red doméstica a través de una conexión VPN segura.', false);
+  } else if (label === 'Cómo funciona') {
+    addMessage('HomeLink opera mediante una VPN (Red Privada Virtual), permitiéndote conectar a tu red doméstica a través de servidores seguros.', false);
+  } else if (label === 'Servicios') {
+    addMessage('Nuestros servicios incluyen:\n- Conexión VPN segura\n- Acceso remoto a tu red\n- Protección de datos\n- Soporte 24/7\n- Configuración personalizada', false);
+  } else if (label === 'Precios') {
+    addMessage('Ofrecemos varios planes:\n- Plan Básico: Conexión VPN\n- Plan Pro: VPN + Acceso remoto\n- Plan Empresarial: Soluciones personalizadas', false);
+  } else if (label === 'Registro') {
+    addMessage('Para registrarte:\n1. Haz clic en \"Mi cuenta\"\n2. Selecciona \"Registrarse\"\n3. Completa el formulario\n4. Verifica tu email\n5. ¡Listo para usar HomeLink!', false);
+  }
+  mostrarOpcionesChat(!!(JSON.parse(localStorage.getItem('user'))?.isLoggedIn));
+}
+</script>
+</body>
+</html>

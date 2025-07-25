@@ -4,242 +4,297 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Obtén tu Router VPN - HomeLink</title>
+    <link rel="stylesheet" href="/STYLES/styles.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" type="image/x-icon" href="logo.ico">
-
-<script>
-    fetch('https://ipinfo.io/json?token=your_token_here')
-    .then(response => response.json())
-    .then(data => {
-        document.getElementById('userIP').innerText = data.ip;
-        document.getElementById('userLocation').innerText = data.city + ", " + data.country;
-        document.getElementById('userStatus').innerText = "No protegido";  // Aquí se puede añadir la lógica de protección.
-    })
-    .catch(error => {
-        console.log('Error obteniendo la IP:', error);
-        document.getElementById('userIP').innerText = "No disponible";
-        document.getElementById('userLocation').innerText = "No disponible";
-        document.getElementById('userStatus').innerText = "No disponible";
-    });
-</script>
+    <style>
+        body{background:linear-gradient(135deg,#ee4d2d 0%,#f53d2d 100%);margin:0;min-height:100vh;}
+    </style>
 </head>
-<body class="bg-gray-50">
+<body class="min-h-screen flex flex-col">
     <!-- Header -->
-    <header class="bg-white shadow-md">
-        <div class="container mx-auto px-4">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex items-center">
-                    <a href="index.html" class="text-2xl font-bold text-[#ee4d2d]">HomeLink VPN</a>
-                </div>
-                <nav class="hidden md:flex space-x-8">
-                    <a href="servicio.html" class="text-gray-800 hover:text-[#ee4d2d]">Inicio</a>
-                    <a href="como funciona.html" class="text-gray-800 hover:text-[#ee4d2d]">Cómo Funciona</a>
-                    <a href="planes.html" class="text-gray-800 hover:text-[#ee4d2d]">Planes</a>
-                    <a href="mi carrito.html" class="text-gray-800 hover:text-[#ee4d2d]">Mi Carrito</a>
-                    <a href="mis compras.html" class="text-gray-800 hover:text-[#ee4d2d]">Mis Compras</a>
-                    <a href="monitoreo.html" class="text-gray-800 hover:text-[#ee4d2d]">Monitoreo</a>
-                </nav>
-                <!-- Auth Buttons -->
-                <div class="flex items-center">
-                    <div id="userMenu" class="hidden relative">
-                        <button onclick="toggleDropdown()" class="flex items-center space-x-2 text-gray-700 hover:text-[#ee4d2d]">
-                            <i class="fas fa-user-circle text-xl"></i>
-                            <span id="userName" class="text-gray-700"></span>
-                            <i class="fas fa-chevron-down text-xs"></i>
-                        </button>
-                        <div id="userDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
-                            <div class="px-4 py-2 text-sm text-gray-700" id="userEmail"></div>
-                            <div class="px-4 py-1 text-xs text-gray-500">Plan Activo: Premium</div>
-                            <hr class="my-1">
-                            <a href="perfil.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                <i class="fas fa-user mr-2"></i> Mi Perfil
-                            </a>
-                            <a href="mi carrito.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                <i class="fas fa-shopping-cart mr-2"></i> Mi Carrito
-                            </a>
-                            <a href="configuracion.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                <i class="fas fa-cog mr-2"></i> Configuración
-                            </a>
-                            <hr class="my-1">
-                            <button onclick="logout()" class="block w-full text-left px-4 py-2 text-sm text-[#ee4d2d] hover:bg-gray-100">
-                                <i class="fas fa-sign-out-alt mr-2"></i> Cerrar Sesión
-                            </button>
-                        </div>
-                    </div>
-                    <div id="authButtons">
-                        <a href="login.html" class="text-gray-700 hover:text-[#ee4d2d] mr-4">Iniciar Sesión</a>
-                        <a href="registro.html" class="bg-[#ee4d2d] text-white px-4 py-2 rounded-md hover:opacity-90">Registrarse</a>
-                    </div>
-                </div>
-            </div>
+    <header class="bg-white shadow-md py-4 w-full">
+        <div class="container mx-auto flex items-center justify-between px-4">
+            <a href="servicio.html" class="text-2xl font-bold text-[#ee4d2d] flex items-center">
+                <i class="fas fa-wifi mr-2"></i> Routers VPN
+            </a>
+            <nav class="space-x-6 flex items-center" id="mainMenu">
+                <a href="servicio.html" class="text-gray-700 hover:text-[#ee4d2d]">Inicio</a>
+                <a href="router.html" class="text-gray-700 hover:text-[#ee4d2d]">Planes</a>
+                <a href="monitoreo.html" class="text-gray-700 hover:text-[#ee4d2d] hidden" id="monitoreoMenu">Monitoreo</a>
+                <a href="mi carrito.html" class="text-gray-700 hover:text-[#ee4d2d] hidden" id="carritoMenu">Mi Carrito</a>
+                <a href="mis compras.html" class="text-gray-700 hover:text-[#ee4d2d] hidden" id="comprasMenu">Mis Compras</a>
+                <a href="login.html" class="text-gray-700 hover:text-[#ee4d2d]" id="loginBtn">Iniciar Sesión</a>
+                <a href="#" class="text-gray-700 hover:text-[#ee4d2d] hidden" id="logoutBtn">Salir</a>
+            </nav>
         </div>
     </header>
-            <!-- Hero Section -->
-            <section class="py-20 bg-gradient-to-r from-[#ee4d2d] to-[#f53d2d] text-white">
-                <div class="container mx-auto px-4">
-                    <div class="max-w-4xl mx-auto text-center">
-                        <h1 class="text-4xl md:text-5xl font-bold mb-6">Internet Sin Límites con HomeLink</h1>
-                        <p class="text-xl mb-8">Conecta tu hogar a internet de forma segura sin depender de otros</p>
-                        <div class="bg-white/10 backdrop-blur-md rounded-lg p-6 inline-block">
-                            <div class="text-center">
-                                <h2 class="text-2xl font-semibold mb-4">Tu IP actual: <span id="userIP">Cargando...</span></h2>
-                                <p class="mb-2">Ubicación: <span id="userLocation">Cargando...</span></p>
-                                <p>Estado: <span class="text-red-300">No protegido</span></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
-    <!-- Routers VPN  -->
-    <section class="py-16 bg-white">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-12">📡 Routers con OpenVPN similares</h2>
-
-            <div class="grid grid-cols-1 gap-8">
-                <!-- ASUS RT-AC86U -->
-                <div class="flex flex-col md:flex-row bg-gray-50 rounded-lg overflow-hidden shadow-md">
-                    <div class="md:w-1/3 p-6">
-                        <img src="images/ASUS RT-AC86U.png" alt="ASUS RT-AC86U" class="w-full h-auto object-contain">
-                    </div>
-                    <div class="md:w-2/3 p-6">
-                        <h3 class="text-2xl font-semibold mb-4">🛡️ ASUS RT-AC86U</h3>
-                        <ul class="space-y-2 mb-6">
-                            <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>Wi-Fi Doble Banda AC2900</li>
-                            <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>4 puertos Gigabit LAN, USB 3.1 y USB 2.0</li>
-                            <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>Soporte OpenVPN nativo</li>
-                            <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>CPU Dual-Core 1.8GHz</li>
-                            <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>Ideal para juegos y streaming 4K</li>
-                        </ul>
-                        <div class="flex items-center justify-between">
-                            <span class="text-2xl font-bold text-[#ee4d2d]">$199.99</span>
-                            <button onclick="addToCart('ASUS RT-AC86U', 199.99)" class="bg-[#ee4d2d] text-white px-6 py-2 rounded-md hover:opacity-90 transition-opacity">
-                                Agregar al Carrito
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Netgear X4S D7800 -->
-                <div class="flex flex-col md:flex-row bg-gray-50 rounded-lg overflow-hidden shadow-md">
-                    <div class="md:w-1/3 p-6">
-                        <img src="images/Nighthawk X4S D7800.png" alt="Netgear X4S D7800" class="w-full h-auto object-contain">
-                    </div>
-                    <div class="md:w-2/3 p-6">
-                        <h3 class="text-2xl font-semibold mb-4">⚡ Netgear Nighthawk X4S D7800</h3>
-                        <ul class="space-y-2 mb-6">
-                            <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>Wi-Fi AC2600 (hasta 2.53 Gbps)</li>
-                            <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>4 puertos Gigabit LAN, USB 3.0</li>
-                            <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>Compatible con OpenVPN</li>
-                            <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>Procesador Dual-Core 1.4GHz</li>
-                            <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>Perfecto para redes exigentes</li>
-                        </ul>
-                        <div class="flex items-center justify-between">
-                            <span class="text-2xl font-bold text-[#ee4d2d]">$249.99</span>
-                            <button onclick="addToCart('Netgear X4S D7800', 249.99)" class="bg-[#ee4d2d] text-white px-6 py-2 rounded-md hover:opacity-90 transition-opacity">
-                                Agregar al Carrito
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TP-Link Archer C2300 -->
-                <div class="flex flex-col md:flex-row bg-gray-50 rounded-lg overflow-hidden shadow-md">
-                    <div class="md:w-1/3 p-6">
-                        <img src="images/TP-Link Archer C2300.jpg" alt="TP-Link Archer C2300" class="w-full h-auto object-contain">
-                    </div>
-                    <div class="md:w-2/3 p-6">
-                        <h3 class="text-2xl font-semibold mb-4">🚀 TP-Link Archer C2300</h3>
-                        <ul class="space-y-2 mb-6">
-                            <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>Wi-Fi Dual Band AC2300</li>
-                            <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>4 puertos LAN Gigabit, USB 3.0 y USB 2.0</li>
-                            <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>Soporte OpenVPN y PPTP</li>
-                            <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>MU-MIMO + Beamforming</li>
-                            <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>Gran cobertura para hogares</li>
-                        </ul>
-                        <div class="flex items-center justify-between">
-                            <span class="text-2xl font-bold text-[#ee4d2d]">$179.99</span>
-                            <button onclick="addToCart('TP-Link Archer C2300', 179.99)" class="bg-[#ee4d2d] text-white px-6 py-2 rounded-md hover:opacity-90 transition-opacity">
-                                Agregar al Carrito
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Cudy WR3000E -->
-                <div class="flex flex-col md:flex-row bg-gray-50 rounded-lg overflow-hidden shadow-md">
-                    <div class="md:w-1/3 p-6">
-                        <img src="images/Cudy WR3000E.jpg" alt="Cudy WR3000E" class="w-full h-auto object-contain">
-                    </div>
-                    <div class="md:w-2/3 p-6">
-                        <h3 class="text-2xl font-semibold mb-4">🔐 Cudy WR3000E</h3>
-                        <ul class="space-y-2 mb-6">
-                            <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>Wi-Fi Dual Band AC2300</li>
-                            <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>5 puertos LAN Gigabit, USB 3.0 y USB 2.0</li>
-                            <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>WireGuard, OpenVPN, IPsec, Zerotier, PPTP y L2TP</li>
-                            <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>MU-MIMO + Beamforming</li>
-                            <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>Gran cobertura para hogares</li>
-                        </ul>
-                        <div class="flex items-center justify-between">
-                            <span class="text-2xl font-bold text-[#ee4d2d]">$279.99</span>
-                            <button onclick="addToCart('Cudy WR3000E', 179.99)" class="bg-[#ee4d2d] text-white px-6 py-2 rounded-md hover:opacity-90 transition-opacity">
-                                Agregar al Carrito
-                            </button>
-                        </div>
-                    </div>
-                </div>
+    <!-- Bloque de IP -->
+    <section class="w-full flex flex-col items-center justify-center mt-8">
+        <div class="bg-gradient-to-r from-[#ee4d2d] to-[#f53d2d] shadow-lg rounded-xl p-6 text-white text-center max-w-md w-full">
+            <h2 class="text-2xl font-semibold mb-2">Tu IP pública: <span id="ipPublica">Cargando...</span></h2>
+            <h3 class="text-lg mb-2">IP local: <span id="ipLocal">Cargando...</span></h3>
+            <div id="ubicacionBloque" class="transition-all duration-300">
+                <p class="mb-1">Ubicación: <span id="ubicacion">-</span></p>
+                <p>Estado: <span id="estado" class="text-red-300">No protegido</span></p>
             </div>
         </div>
     </section>
 
-    
-        <!-- Router Features Section -->
-        <section class="py-16">
+    <!-- Main Content -->
+    <main class="flex-1">
+        <!-- Routers VPN  -->
+        <section class="py-16 bg-white">
             <div class="container mx-auto px-4">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <!-- Feature 1 -->
-                    <div class="bg-white p-6 rounded-lg shadow-md">
-                        <div class="text-[#ee4d2d] text-3xl mb-4">
-                            <i class="fas fa-shield-alt"></i>
+                <h2 class="text-3xl font-bold text-center mb-12">📡 Routers con OpenVPN similares</h2>
+                <div class="grid grid-cols-1 gap-8">
+                    <!-- ASUS RT-AC86U -->
+                    <div class="flex flex-col md:flex-row bg-gray-50 rounded-lg overflow-hidden shadow-md">
+                        <div class="md:w-1/3 p-6">
+                            <img src="../imagenes/ASUS RT-AC86U.png" alt="ASUS RT-AC86U" class="w-full h-auto object-contain">
                         </div>
-                        <h3 class="text-xl font-semibold mb-3">Seguridad Avanzada</h3>
-                        <p class="text-gray-600">Router preconfigurado con cifrado militar AES-256 para proteger tu conexión en todo momento.</p>
+                        <div class="md:w-2/3 p-6">
+                            <h3 class="text-2xl font-semibold mb-4">🛡️ ASUS RT-AC86U</h3>
+                            <ul class="space-y-2 mb-6">
+                                <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>Wi-Fi Doble Banda AC2900</li>
+                                <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>4 puertos Gigabit LAN, USB 3.1 y USB 2.0</li>
+                                <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>Soporte OpenVPN nativo</li>
+                                <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>CPU Dual-Core 1.8GHz</li>
+                                <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>Ideal para juegos y streaming 4K</li>
+                            </ul>
+                            <div class="flex items-center justify-between">
+                                <span class="text-2xl font-bold text-[#ee4d2d]">$199.99</span>
+                                <button onclick="addToCart('ASUS RT-AC86U', 199.99)" class="bg-[#ee4d2d] text-white px-6 py-2 rounded-md hover:opacity-90 transition-opacity font-bold">Agregar al Carrito</button>
+                            </div>
+                        </div>
                     </div>
-    
-                    <!-- Feature 2 -->
-                    <div class="bg-white p-6 rounded-lg shadow-md">
-                        <div class="text-[#ee4d2d] text-3xl mb-4">
-                            <i class="fas fa-bolt"></i>
+                    <!-- Netgear X4S D7800 -->
+                    <div class="flex flex-col md:flex-row bg-gray-50 rounded-lg overflow-hidden shadow-md">
+                        <div class="md:w-1/3 p-6">
+                            <img src="../imagenes/Nighthawk X4S D7800.png" alt="Netgear X4S D7800" class="w-full h-auto object-contain">
                         </div>
-                        <h3 class="text-xl font-semibold mb-3">Velocidad Óptima</h3>
-                        <p class="text-gray-600">Disfruta de velocidades de hasta 1Gbps con nuestro router optimizado para VPN.</p>
+                        <div class="md:w-2/3 p-6">
+                            <h3 class="text-2xl font-semibold mb-4">⚡ Netgear Nighthawk X4S D7800</h3>
+                            <ul class="space-y-2 mb-6">
+                                <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>Wi-Fi AC2600 (hasta 2.53 Gbps)</li>
+                                <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>4 puertos Gigabit LAN, USB 3.0</li>
+                                <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>Compatible con OpenVPN</li>
+                                <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>Procesador Dual-Core 1.4GHz</li>
+                                <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>Perfecto para redes exigentes</li>
+                            </ul>
+                            <div class="flex items-center justify-between">
+                                <span class="text-2xl font-bold text-[#ee4d2d]">$249.99</span>
+                                <button onclick="addToCart('Netgear X4S D7800', 249.99)" class="bg-[#ee4d2d] text-white px-6 py-2 rounded-md hover:opacity-90 transition-opacity font-bold">Agregar al Carrito</button>
+                            </div>
+                        </div>
                     </div>
-    
-                    <!-- Feature 3 -->
-                    <div class="bg-white p-6 rounded-lg shadow-md">
-                        <div class="text-[#ee4d2d] text-3xl mb-4">
-                            <i class="fas fa-cogs"></i>
+                    <!-- TP-Link Archer C2300 -->
+                    <div class="flex flex-col md:flex-row bg-gray-50 rounded-lg overflow-hidden shadow-md">
+                        <div class="md:w-1/3 p-6">
+                            <img src="../imagenes/TP-Link Archer C2300.jpg" alt="TP-Link Archer C2300" class="w-full h-auto object-contain">
                         </div>
-                        <h3 class="text-xl font-semibold mb-3">Configuración Automática</h3>
-                        <p class="text-gray-600">Instalación plug & play. Solo conéctalo y estará listo para usar en minutos.</p>
+                        <div class="md:w-2/3 p-6">
+                            <h3 class="text-2xl font-semibold mb-4">🚀 TP-Link Archer C2300</h3>
+                            <ul class="space-y-2 mb-6">
+                                <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>Wi-Fi Dual Band AC2300</li>
+                                <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>4 puertos LAN Gigabit, USB 3.0 y USB 2.0</li>
+                                <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>Soporte OpenVPN y PPTP</li>
+                                <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>MU-MIMO + Beamforming</li>
+                                <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>Gran cobertura para hogares</li>
+                            </ul>
+                            <div class="flex items-center justify-between">
+                                <span class="text-2xl font-bold text-[#ee4d2d]">$179.99</span>
+                                <button onclick="addToCart('TP-Link Archer C2300', 179.99)" class="bg-[#ee4d2d] text-white px-6 py-2 rounded-md hover:opacity-90 transition-opacity font-bold">Agregar al Carrito</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Cudy WR3000E -->
+                    <div class="flex flex-col md:flex-row bg-gray-50 rounded-lg overflow-hidden shadow-md">
+                        <div class="md:w-1/3 p-6">
+                            <img src="../imagenes/Cudy WR3000E.jpg" alt="Cudy WR3000E" class="w-full h-auto object-contain">
+                        </div>
+                        <div class="md:w-2/3 p-6">
+                            <h3 class="text-2xl font-semibold mb-4">🔐 Cudy WR3000E</h3>
+                            <ul class="space-y-2 mb-6">
+                                <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>Wi-Fi Dual Band AC2300</li>
+                                <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>5 puertos LAN Gigabit, USB 3.0 y USB 2.0</li>
+                                <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>WireGuard, OpenVPN, IPsec, Zerotier, PPTP y L2TP</li>
+                                <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>MU-MIMO + Beamforming</li>
+                                <li class="flex items-center"><i class="fas fa-check text-[#ee4d2d] mr-2"></i>Gran cobertura para hogares</li>
+                            </ul>
+                            <div class="flex items-center justify-between">
+                                <span class="text-2xl font-bold text-[#ee4d2d]">$179.99</span>
+                                <button onclick="addToCart('Cudy WR3000E', 179.99)" class="bg-[#ee4d2d] text-white px-6 py-2 rounded-md hover:opacity-90 transition-opacity font-bold">Agregar al Carrito</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
-    
-        <!-- CTA Section -->
-        <section class="py-16 bg-gray-100">
-            <div class="container mx-auto px-4 text-center">
-                <h2 class="text-3xl font-bold mb-8">¿Listo para empezar?</h2>
-                <a href="planes.html" class="inline-block bg-[#ee4d2d] text-white px-8 py-4 rounded-md hover:opacity-90 transition-opacity text-lg font-semibold">
-                    Ver Planes Disponibles
-                </a>
+        <!-- Router Features Section -->
+        <section class="py-16">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Aquí irían más características o información -->
+                </div>
             </div>
         </section>
+    </main>
+    <footer class="bg-white shadow-inner pt-12 pb-4 mt-8 w-full border-t">
+      <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-5 gap-8 mb-6">
+        <div>
+          <h3 class="uppercase text-xs font-bold mb-2 text-gray-700">Servicio al Cliente</h3>
+          <ul class="space-y-1 text-sm text-gray-600">
+            <li><a href="#" class="hover:text-[#ee4d2d]">Peticiones, Quejas y Reclamos</a></li>
+            <li><a href="#" class="hover:text-[#ee4d2d]">Métodos de Pago</a></li>
+            <li><a href="#" class="hover:text-[#ee4d2d]">Devolución y Reembolso</a></li>
+            <li><a href="#" class="hover:text-[#ee4d2d]">Garantía HomeLink</a></li>
+            <li><a href="#" class="hover:text-[#ee4d2d]">Contáctanos</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="uppercase text-xs font-bold mb-2 text-gray-700">Acerca de HomeLink</h3>
+          <ul class="space-y-1 text-sm text-gray-600">
+            <li><a href="#" class="hover:text-[#ee4d2d]">Sobre Nosotros</a></li>
+            <li><a href="#" class="hover:text-[#ee4d2d]">Planes y Servicios</a></li>
+            <li><a href="#" class="hover:text-[#ee4d2d]">Política de Privacidad</a></li>
+            <li><a href="#" class="hover:text-[#ee4d2d]">Términos de Servicio</a></li>
+            <li><a href="#" class="hover:text-[#ee4d2d]">Soporte Técnico</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="uppercase text-xs font-bold mb-2 text-gray-700">Pago</h3>
+          <div class="flex flex-wrap gap-2 items-center mt-2">
+            <img src="../imagenes/mastercard.png" alt="Mastercard" class="h-5">
+            <img src="../imagenes/visa.png" alt="Visa" class="h-5">
+            <img src="../imagenes/diners.png" alt="Diners" class="h-5">
+            <img src="../imagenes/pse.png" alt="PSE" class="h-5">
+            <img src="../imagenes/efecty.png" alt="Efecty" class="h-5">
+          </div>
+        </div>
+        <div>
+          <h3 class="uppercase text-xs font-bold mb-2 text-gray-700">Síguenos</h3>
+          <ul class="space-y-1 text-sm text-gray-600">
+            <li><a href="#" class="hover:text-[#ee4d2d]">Facebook</a></li>
+            <li><a href="#" class="hover:text-[#ee4d2d]">Instagram</a></li>
+            <li><a href="#" class="hover:text-[#ee4d2d]">LinkedIn</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="uppercase text-xs font-bold mb-2 text-gray-700">Descargar la App HomeLink</h3>
+          <div class="flex items-center gap-2 mb-2">
+            <img src="../imagenes/qr.jpg" alt="QR HomeLink" class="w-16 h-16 rounded">
+            <div class="flex flex-col gap-1">
+              <img src="../imagenes/google-play-badge.png" alt="Google Play" class="h-6">
+              <img src="../imagenes/app-store-badge.png" alt="App Store" class="h-6">
+              <img src="../imagenes/appgallery-badge.png" alt="AppGallery" class="h-6">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center text-xs text-gray-500 border-t pt-4">
+        &copy; 2025 HomeLink. Todos los Derechos Reservados
+      </div>
+    </footer>
 
+    <!-- Chatbot HomeLink VPN v1.0 -->
+    <div id="chatbot" class="fixed bottom-4 right-4 z-50">
+      <div id="chat-messages" class="hidden bg-white rounded-lg shadow-lg w-80 h-96 flex flex-col">
+        <div class="bg-[#ee4d2d] text-white p-4 rounded-t-lg flex justify-between items-center">
+          <h3>Asistente Virtual</h3>
+          <button id="close-chat" class="text-white hover:text-gray-300">×</button>
+        </div>
+        <div id="messages" class="flex-1 overflow-y-auto p-4 space-y-4"></div>
+        <div class="border-t p-4">
+          <div class="flex space-x-2">
+            <input type="text" id="user-input" class="flex-1 border rounded-lg px-4 py-2 focus:outline-none focus:border-[#ee4d2d]" placeholder="Escribe tu mensaje...">
+            <button id="send-message" class="bg-[#ee4d2d] text-white px-4 py-2 rounded-lg hover:bg-[#d13f1d]">Enviar</button>
+          </div>
+        </div>
+      </div>
+      <button id="toggle-chat" class="bg-[#ee4d2d] text-white w-16 h-16 rounded-full shadow-lg flex items-center justify-center hover:bg-[#d13f1d]">
+        <i class="fas fa-comments text-2xl"></i>
+      </button>
+    </div>
     <!-- Script para obtener IP -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
+        // Lógica de menú según sesión
+        function actualizarMenu() {
+            const user = JSON.parse(localStorage.getItem('user'));
+            const carritoMenu = document.getElementById('carritoMenu');
+            const comprasMenu = document.getElementById('comprasMenu');
+            const monitoreoMenu = document.getElementById('monitoreoMenu');
+            const loginBtn = document.getElementById('loginBtn');
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (user && user.isLoggedIn) {
+                carritoMenu.classList.remove('hidden');
+                comprasMenu.classList.remove('hidden');
+                monitoreoMenu.classList.remove('hidden');
+                loginBtn.classList.add('hidden');
+                logoutBtn.classList.remove('hidden');
+            } else {
+                carritoMenu.classList.add('hidden');
+                comprasMenu.classList.add('hidden');
+                monitoreoMenu.classList.add('hidden');
+                loginBtn.classList.remove('hidden');
+                logoutBtn.classList.add('hidden');
+            }
+        }
+        document.getElementById('logoutBtn').onclick = function() {
+            localStorage.removeItem('user');
+            location.reload();
+        };
+        actualizarMenu();
+
+        // Bloque de IP: pública y local
+        async function obtenerIPPublica() {
+            try {
+                const res = await fetch('https://ipapi.co/json/');
+                const data = await res.json();
+                document.getElementById('ipPublica').textContent = data.ip;
+                const user = JSON.parse(localStorage.getItem('user'));
+                if (user && user.isLoggedIn) {
+                    document.getElementById('ubicacion').textContent = `${data.city}, ${data.country_name}`;
+                    document.getElementById('estado').textContent = 'Protegido';
+                    document.getElementById('estado').classList.remove('text-red-300');
+                    document.getElementById('estado').classList.add('text-green-300');
+                } else {
+                    document.getElementById('ubicacion').textContent = '-';
+                    document.getElementById('estado').textContent = 'No protegido';
+                    document.getElementById('estado').classList.remove('text-green-300');
+                    document.getElementById('estado').classList.add('text-red-300');
+                }
+            } catch (e) {
+                document.getElementById('ipPublica').textContent = 'No disponible';
+                document.getElementById('ubicacion').textContent = '-';
+                document.getElementById('estado').textContent = 'No disponible';
+            }
+        }
+        function obtenerIPLocal() {
+            const RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
+            if (!RTCPeerConnection) {
+                document.getElementById('ipLocal').textContent = 'No disponible';
+                return;
+            }
+            const pc = new RTCPeerConnection({iceServers:[]});
+            pc.createDataChannel('');
+            pc.createOffer().then(offer => pc.setLocalDescription(offer));
+            pc.onicecandidate = function(event) {
+                if (!event || !event.candidate) return;
+                const ipRegex = /([0-9]{1,3}(\.[0-9]{1,3}){3})/;
+                const ipMatch = ipRegex.exec(event.candidate.candidate);
+                if (ipMatch) {
+                    document.getElementById('ipLocal').textContent = ipMatch[1];
+                    pc.onicecandidate = null;
+                }
+            };
+        }
+        obtenerIPPublica();
+        obtenerIPLocal();
+
         // Función para obtener información de IP
         async function getUserIPInfo() {
             try {
@@ -256,77 +311,24 @@
         }
 
         // Función para agregar al carrito
-        function addToCart(productName, price) {
-            const userSession = localStorage.getItem('userSession');
-            if (!userSession) {
-                // Guardar el producto que se intentó agregar
-                localStorage.setItem('pendingProduct', JSON.stringify({
-                    name: productName,
-                    price: price,
-                    quantity: 1,
-                    date: new Date().toISOString(),
-                    type: 'router',
-                    image: `${productName.replace(/\s+/g, '-')}.jpg`
-                }));
-                window.location.href = 'login.html?redirect=router.html';
-                return;
-            }
-
-            // Obtener el carrito actual del localStorage o crear uno nuevo
+        function addToCart(name, price) {
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            
-            // Verificar si el producto ya está en el carrito
-            const existingProductIndex = cart.findIndex(item => item.name === productName);
-            
-            if (existingProductIndex !== -1) {
-                // Si el producto ya existe, incrementar la cantidad
-                cart[existingProductIndex].quantity += 1;
+            const idx = cart.findIndex(i => i.name === name);
+            if (idx >= 0) {
+                cart[idx].quantity += 1;
             } else {
-                // Agregar el nuevo producto
-                cart.push({
-                    name: productName,
-                    price: price,
-                    quantity: 1,
-                    date: new Date().toISOString(),
-                    type: 'router',
-                    image: `${productName.replace(/\s+/g, '-')}.jpg`
-                });
+                cart.push({ name, price, quantity: 1 });
             }
-            
-            // Guardar el carrito actualizado
             localStorage.setItem('cart', JSON.stringify(cart));
-            
-            // Actualizar el contador del carrito
-            const cartCount = document.getElementById('cartCount');
-            if (cartCount) {
-                cartCount.textContent = cart.reduce((total, item) => total + item.quantity, 0);
-                cartCount.classList.remove('hidden');
-            }
-            
-            // Actualizar el historial del usuario
-            const userData = JSON.parse(userSession);
-            if (!userData.recentlyViewed) {
-                userData.recentlyViewed = [];
-            }
-            
-            // Agregar al historial de productos vistos
-            const viewedProduct = {
-                name: productName,
-                price: price,
-                type: 'router',
-                viewedAt: new Date().toISOString()
-            };
-            
-            // Mantener solo los últimos 10 productos vistos
-            userData.recentlyViewed.unshift(viewedProduct);
-            if (userData.recentlyViewed.length > 10) {
-                userData.recentlyViewed.pop();
-            }
-            
-            localStorage.setItem('userSession', JSON.stringify(userData));
-            
-            // Redirigir al carrito
-            window.location.href = 'mi carrito.html';
+            Swal.fire({
+                icon: 'success',
+                title: '¡Agregado!',
+                text: `${name} se agregó al carrito.`,
+                timer: 1200,
+                showConfirmButton: false,
+                background: '#fff',
+                color: '#ee4d2d'
+            });
         }
 
         // Toggle dropdown
@@ -398,9 +400,298 @@
         });
     </script>
 
-<div class="buttons">
-    <a href="router.html" class="btn btn-primary">Router</a>
-    <a href="como funciona.html" class="btn btn-primary">Cómo funciona</a>
-</div>
+    <!-- Script del Chatbot Avanzado -->
+    <script>
+    // Añadir mensaje al chat
+    function addMessage(text, isUser = false) {
+      const messages = document.getElementById('messages');
+      const div = document.createElement('div');
+      div.className = 'mb-2 ' + (isUser ? 'text-right' : 'text-left');
+      div.innerHTML = `<span class="${isUser ? 'bg-[#ee4d2d] text-white' : 'bg-gray-200 text-gray-800'} px-3 py-2 rounded-lg inline-block whitespace-pre-line">${text}</span>`;
+      messages.appendChild(div);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    // Añadir HTML al chat
+    function addHtmlMessage(html) {
+      const messages = document.getElementById('messages');
+      const div = document.createElement('div');
+      div.innerHTML = html;
+      messages.appendChild(div);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    // Opciones rápidas como burbujas
+    function mostrarOpcionesChat(loggedIn) {
+      const messages = document.getElementById('messages');
+      const opcionesDiv = document.createElement('div');
+      opcionesDiv.className = 'flex flex-wrap gap-2 my-2';
+      // Opciones básicas
+      const opciones = [
+        { label: 'Buscar', action: 'buscar' },
+        { label: 'Ver productos', action: 'ver_productos' }
+      ];
+      // Opciones avanzadas solo si está logueado
+      if (loggedIn) {
+        opciones.push(
+          { label: 'Hacer pedido', action: 'hacer_pedido' },
+          { label: 'Ver mis compras', action: 'ver_mis_compras' },
+          { label: 'Cerrar sesión', action: 'logout' }
+        );
+      } else {
+        opciones.push({ label: 'Iniciar sesión', action: 'login' });
+      }
+      opciones.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.textContent = opt.label;
+        btn.className = 'bg-[#ee4d2d] text-white px-3 py-1 rounded-md font-bold hover:bg-[#d13f1d] transition-colors text-xs';
+        btn.onclick = () => manejarOpcionChat(opt.action);
+        opcionesDiv.appendChild(btn);
+      });
+      messages.appendChild(opcionesDiv);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    // Lógica para manejar cada opción rápida
+    async function manejarOpcionChat(action) {
+      if (action === 'buscar') {
+        addMessage('¿Qué deseas buscar? Escribe tu consulta en el chat.', false);
+      } else if (action === 'ver_productos') {
+        mostrarProductosEnChat();
+      } else if (action === 'hacer_pedido') {
+        mostrarCarritoEnChat();
+      } else if (action === 'ver_mis_compras') {
+        mostrarMisComprasEnChat();
+      } else if (action === 'login') {
+        addMessage('Por favor, inicia sesión desde la web para acceder a todas las funciones.', false);
+      } else if (action === 'logout') {
+        localStorage.removeItem('user');
+        addMessage('Has cerrado sesión.', false);
+        setTimeout(()=>location.reload(), 1000);
+      }
+    }
+
+    // Mostrar productos en el chat
+    function mostrarProductosEnChat() {
+      const productos = [
+        { name: 'ASUS RT-AC86U', price: 199.99 },
+        { name: 'TP-Link Archer C2300', price: 179.99 },
+        { name: 'Cudy WR3000E', price: 179.99 },
+        { name: 'Netgear X4S D7800', price: 249.99 }
+      ];
+      const user = JSON.parse(localStorage.getItem('user'));
+      let html = '<div class="space-y-2">';
+      productos.forEach(p => {
+        html += `<div class='flex items-center justify-between bg-gray-100 rounded px-2 py-1'>
+          <span class='font-bold text-[#ee4d2d]'>${p.name}</span>
+          <span class='text-sm'>$${p.price}</span>`;
+        if (user && user.isLoggedIn) {
+          html += `<button class='ml-2 bg-[#ee4d2d] text-white px-2 py-1 rounded text-xs' onclick='agregarAlCarritoChat("${p.name}",${p.price})'>Agregar</button>`;
+        }
+        html += '</div>';
+      });
+      html += '</div>';
+      addMessage('Productos disponibles:', false);
+      addHtmlMessage(html);
+      mostrarOpcionesChat(!!(user && user.isLoggedIn));
+    }
+
+    // Agregar producto al carrito desde el chat
+    window.agregarAlCarritoChat = function(name, price) {
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (!user || !user.isLoggedIn) {
+        addMessage('Debes iniciar sesión para agregar productos al carrito.', false);
+        return;
+      }
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const idx = cart.findIndex(i => i.name === name);
+      if (idx >= 0) {
+        cart[idx].quantity += 1;
+      } else {
+        cart.push({ name, price, quantity: 1 });
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
+      addMessage(`${name} agregado al carrito.`, false);
+      mostrarOpcionesChat(true);
+    }
+
+    // Mostrar carrito en el chat
+    function mostrarCarritoEnChat() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      if (!cart.length) {
+        addMessage('Tu carrito está vacío.', false);
+        mostrarOpcionesChat(true);
+        return;
+      }
+      let html = '<div class="space-y-2">';
+      cart.forEach(item => {
+        html += `<div class='flex items-center justify-between bg-gray-100 rounded px-2 py-1'>
+          <span>${item.name} x${item.quantity}</span>
+          <span>$${(item.price * item.quantity).toFixed(2)}</span>
+        </div>`;
+      });
+      html += '</div>';
+      html += `<button class='mt-2 bg-[#ee4d2d] text-white px-3 py-1 rounded' onclick='finalizarCompraChat()'>Finalizar compra</button>`;
+      addMessage('Tu carrito:', false);
+      addHtmlMessage(html);
+      mostrarOpcionesChat(true);
+    }
+
+    // Finalizar compra desde el chat
+    window.finalizarCompraChat = async function() {
+      const user = JSON.parse(localStorage.getItem('user'));
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      if (!user || !user.isLoggedIn) {
+        addMessage('Debes iniciar sesión para comprar.', false);
+        return;
+      }
+      if (!cart.length) {
+        addMessage('Tu carrito está vacío.', false);
+        return;
+      }
+      // Simular datos personales (puedes pedirlos en pasos reales)
+      const datos = {
+        persona: 'natural', banco: 'bancolombia', nombres: user.nombre || '', apellidos: '', correo: user.correo, tipo_id: 'CC', documento: '123456789', celular: '3000000000'
+      };
+      const res = await fetch('/comprar', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ userSession: { email: user.correo, isLoggedIn: true }, cart, datos })
+      });
+      const data = await res.json();
+      if (data.id) {
+        localStorage.removeItem('cart');
+        addMessage('¡Compra realizada con éxito! Puedes ver el detalle en Mis Compras.', false);
+      } else {
+        addMessage('No se pudo registrar la compra.', false);
+      }
+      mostrarOpcionesChat(true);
+    }
+
+    // Mostrar compras en el chat
+    async function mostrarMisComprasEnChat() {
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (!user || !user.isLoggedIn) {
+        addMessage('Debes iniciar sesión para ver tus compras.', false);
+        return;
+      }
+      const res = await fetch('/miscompras', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ userSession: { email: user.correo, isLoggedIn: true } })
+      });
+      const compras = await res.json();
+      if (!compras.length) {
+        addMessage('No tienes compras registradas.', false);
+        mostrarOpcionesChat(true);
+        return;
+      }
+      let html = '<div class="space-y-2">';
+      compras.forEach(c => {
+        html += `<div class='bg-gray-100 rounded px-2 py-1 mb-1'>
+          <span class='font-bold text-[#ee4d2d]'>Compra #${c.id_compra}</span> - $${c.total} <br><span class='text-xs'>${c.fecha}</span>
+        </div>`;
+      });
+      html += '</div>';
+      addMessage('Tus compras:', false);
+      addHtmlMessage(html);
+      mostrarOpcionesChat(true);
+    }
+
+    // Procesar mensaje enviado
+    function procesarMensaje(text) {
+      // Aquí puedes poner lógica de respuestas automáticas básicas
+      if (text.toLowerCase().includes('hola')) {
+        addMessage('¡Hola! ¿En qué puedo ayudarte?', false);
+        mostrarOpcionesChat(!!(JSON.parse(localStorage.getItem('user'))?.isLoggedIn));
+      } else {
+        addMessage('No entendí tu mensaje. Usa los botones o pregunta por productos.', false);
+        mostrarOpcionesChat(!!(JSON.parse(localStorage.getItem('user'))?.isLoggedIn));
+      }
+    }
+
+    // Evento de enviar mensaje
+    document.getElementById('send-message').onclick = function() {
+      const input = document.getElementById('user-input');
+      const text = input.value.trim();
+      if (text) {
+        addMessage(text, true);
+        procesarMensaje(text);
+        input.value = '';
+      }
+    };
+    document.getElementById('user-input').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') document.getElementById('send-message').click();
+    });
+
+    // Mostrar bienvenida y opciones al abrir el chat
+    const toggleChat = document.getElementById('toggle-chat');
+    const chatMessages = document.getElementById('chat-messages');
+    const closeChat = document.getElementById('close-chat');
+
+    toggleChat.addEventListener('click', () => {
+      chatMessages.classList.toggle('hidden');
+      if (!chatMessages.classList.contains('hidden')) {
+        setTimeout(() => {
+          const messages = document.getElementById('messages');
+          if (!messages.hasChildNodes()) {
+            addWelcomeBubbles();
+            mostrarOpcionesChat(!!(JSON.parse(localStorage.getItem('user'))?.isLoggedIn));
+          }
+        }, 300);
+      }
+    });
+    closeChat.addEventListener('click', () => {
+      chatMessages.classList.add('hidden');
+    });
+
+    function addWelcomeBubbles() {
+      const messages = document.getElementById('messages');
+      // Mensaje de bienvenida
+      const div = document.createElement('div');
+      div.className = 'mb-2 text-left';
+      div.innerHTML = `<span class="bg-gray-200 text-gray-800 px-3 py-2 rounded-lg inline-block whitespace-pre-line">
+        ¡Hola! Soy el asistente virtual de HomeLink. ¿En qué puedo ayudarte?<br><br>
+        Puedes preguntarme sobre:
+      </span>`;
+      messages.appendChild(div);
+
+      // Opciones como burbujas
+      const opciones = [
+        { label: 'Qué es HomeLink', color: 'bg-[#ee4d2d] text-white' },
+        { label: 'Cómo funciona', color: 'bg-[#f53d2d] text-white' },
+        { label: 'Servicios', color: 'bg-[#ff9800] text-white' },
+        { label: 'Precios', color: 'bg-[#009688] text-white' },
+        { label: 'Registro', color: 'bg-[#3f51b5] text-white' }
+      ];
+      const opcionesDiv = document.createElement('div');
+      opcionesDiv.className = 'flex flex-wrap gap-2 my-2';
+      opciones.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.textContent = opt.label;
+        btn.className = `${opt.color} px-3 py-1 rounded-full font-bold shadow hover:opacity-90 transition text-xs`;
+        btn.onclick = () => responderOpcionBienvenida(opt.label);
+        opcionesDiv.appendChild(btn);
+      });
+      messages.appendChild(opcionesDiv);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    // Respuestas automáticas para cada burbuja
+    function responderOpcionBienvenida(label) {
+      if (label === 'Qué es HomeLink') {
+        addMessage('HomeLink es un servicio innovador que te permite acceder de manera remota a tu red doméstica a través de una conexión VPN segura.', false);
+      } else if (label === 'Cómo funciona') {
+        addMessage('HomeLink opera mediante una VPN (Red Privada Virtual), permitiéndote conectar a tu red doméstica a través de servidores seguros.', false);
+      } else if (label === 'Servicios') {
+        addMessage('Nuestros servicios incluyen:\n- Conexión VPN segura\n- Acceso remoto a tu red\n- Protección de datos\n- Soporte 24/7\n- Configuración personalizada', false);
+      } else if (label === 'Precios') {
+        addMessage('Ofrecemos varios planes:\n- Plan Básico: Conexión VPN\n- Plan Pro: VPN + Acceso remoto\n- Plan Empresarial: Soluciones personalizadas', false);
+      } else if (label === 'Registro') {
+        addMessage('Para registrarte:\n1. Haz clic en \"Mi cuenta\"\n2. Selecciona \"Registrarse\"\n3. Completa el formulario\n4. Verifica tu email\n5. ¡Listo para usar HomeLink!', false);
+      }
+      mostrarOpcionesChat(!!(JSON.parse(localStorage.getItem('user'))?.isLoggedIn));
+    }
+    </script>
 </body>
 </html>
